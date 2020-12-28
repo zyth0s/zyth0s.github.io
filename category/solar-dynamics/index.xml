@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Solar Dynamics | Daniel Menéndez Crespo</title>
+    <link>https://zyth0s.github.io/category/solar-dynamics/</link>
+      <atom:link href="https://zyth0s.github.io/category/solar-dynamics/index.xml" rel="self" type="application/rss+xml" />
+    <description>Solar Dynamics</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 28 Dec 2020 08:25:09 +0000</lastBuildDate>
+    <image>
+      <url>https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>Solar Dynamics</title>
+      <link>https://zyth0s.github.io/category/solar-dynamics/</link>
+    </image>
+    
+    <item>
+      <title>Solar System Simulation</title>
+      <link>https://zyth0s.github.io/project/solar-system-simulation/</link>
+      <pubDate>Mon, 28 Dec 2020 08:25:09 +0000</pubDate>
+      <guid>https://zyth0s.github.io/project/solar-system-simulation/</guid>
+      <description>&lt;p&gt;A &lt;a href=&#34;https://github.com/zyth0s/SciAlgs.jl/blob/master/src/Astro/planets_motion.jl&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;script&lt;/a&gt; to simulate planet motion. Plots the solar system at a given moment in time.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

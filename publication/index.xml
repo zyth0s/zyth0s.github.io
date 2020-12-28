@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Publications | Academic</title>
+    <title>Publications | Daniel Menéndez Crespo</title>
     <link>https://zyth0s.github.io/publication/</link>
       <atom:link href="https://zyth0s.github.io/publication/index.xml" rel="self" type="application/rss+xml" />
     <description>Publications</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 01 Jul 2013 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 14 Apr 2018 17:55:43 +0000</lastBuildDate>
     <image>
       <url>https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Publications</title>
@@ -13,22 +13,27 @@
     </image>
     
     <item>
-      <title>An example conference paper</title>
-      <link>https://zyth0s.github.io/publication/example/</link>
-      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
-      <guid>https://zyth0s.github.io/publication/example/</guid>
-      <description>&lt;div class=&#34;alert alert-note&#34;&gt;
-  &lt;div&gt;
-    Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&#34;alert alert-note&#34;&gt;
-  &lt;div&gt;
-    Create your slides in Markdown - click the &lt;em&gt;Slides&lt;/em&gt; button to check out the example.
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;Supplementary notes can be added here, including &lt;a href=&#34;https://wowchemy.com/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;code, math, and images&lt;/a&gt;.&lt;/p&gt;
-</description>
+      <title>Real‐Space In Situ Bond Energies: Toward A Consistent Energetic Definition of Bond Strength</title>
+      <link>https://zyth0s.github.io/publication/realspace-in-situ-bond-energies-toward-a-consistent-energetic-definition-of-bond-strength/</link>
+      <pubDate>Sat, 14 Apr 2018 17:55:43 +0000</pubDate>
+      <guid>https://zyth0s.github.io/publication/realspace-in-situ-bond-energies-toward-a-consistent-energetic-definition-of-bond-strength/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>A multipolar approach to the interatomic covalent interaction energy</title>
+      <link>https://zyth0s.github.io/publication/a-multipolar-approach-to-the-interatomic-covalent-interaction-energy/</link>
+      <pubDate>Thu, 16 Feb 2017 19:33:15 +0000</pubDate>
+      <guid>https://zyth0s.github.io/publication/a-multipolar-approach-to-the-interatomic-covalent-interaction-energy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>An unexpected bridge between chemical bonding indicators and electrical conductivity through the localization tensor</title>
+      <link>https://zyth0s.github.io/publication/an-unexpected-bridge-between-chemical-bonding-indicators-and-electrical-conductivity-through-the-localization-tensor/</link>
+      <pubDate>Mon, 12 Dec 2016 19:40:06 +0000</pubDate>
+      <guid>https://zyth0s.github.io/publication/an-unexpected-bridge-between-chemical-bonding-indicators-and-electrical-conductivity-through-the-localization-tensor/</guid>
+      <description></description>
     </item>
     
   </channel>
