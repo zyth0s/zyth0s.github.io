@@ -3,23 +3,43 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://zyth0s.github.io/categories/</loc>
+    <lastmod>2020-12-29T09:54:08+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zyth0s.github.io/</loc>
-    <lastmod>2020-12-28T12:39:29+00:00</lastmod>
+    <lastmod>2020-12-29T09:54:08+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://zyth0s.github.io/project/</loc>
-    <lastmod>2020-12-28T12:39:29+00:00</lastmod>
+    <lastmod>2020-12-29T09:54:08+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zyth0s.github.io/tag/quantum-computing/</loc>
+    <lastmod>2020-12-29T09:54:08+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zyth0s.github.io/category/quantum-computing/</loc>
+    <lastmod>2020-12-29T09:54:08+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zyth0s.github.io/tags/</loc>
+    <lastmod>2020-12-29T09:54:08+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/</loc>
+    <lastmod>2020-12-29T09:54:08+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://zyth0s.github.io/project/psi4julia/</loc>
     <lastmod>2020-12-28T12:39:29+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zyth0s.github.io/categories/</loc>
-    <lastmod>2020-12-28T12:20:55+00:00</lastmod>
   </url>
   
   <url>
@@ -29,11 +49,6 @@
   
   <url>
     <loc>https://zyth0s.github.io/category/condensed-matter/</loc>
-    <lastmod>2020-12-28T12:20:55+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zyth0s.github.io/tags/</loc>
     <lastmod>2020-12-28T12:20:55+00:00</lastmod>
   </url>
   
@@ -75,16 +90,6 @@
   <url>
     <loc>https://zyth0s.github.io/project/solar-system-simulation/</loc>
     <lastmod>2020-12-28T08:25:09+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zyth0s.github.io/tag/quantum-computing/</loc>
-    <lastmod>2020-12-28T00:13:44+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zyth0s.github.io/category/quantum-computing/</loc>
-    <lastmod>2020-12-28T00:13:44+00:00</lastmod>
   </url>
   
   <url>

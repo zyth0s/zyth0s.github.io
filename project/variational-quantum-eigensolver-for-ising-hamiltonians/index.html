@@ -34,10 +34,12 @@
   
     
   
-  <meta name="description" content="A script to simulate planet motion. Plots the solar system at a given moment in time.">
+  <meta name="description" content="Jupyter notebook here.
+Variational Quantum Eigensolver (VQE) algorithm is a quantum realization of the traditional Ritz method.
+A more lengthy explanation is given by Michał Stęchły. Here I will just work out how it operates.">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://zyth0s.github.io/project/solar-system-simulation/">
+  <link rel="alternate" hreflang="en-us" href="https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/">
 
   
 
@@ -264,7 +266,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://zyth0s.github.io/project/solar-system-simulation/">
+  <link rel="canonical" href="https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/">
 
   
   
@@ -274,20 +276,23 @@
   
   
     
+    
   
   
-  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Daniel Menéndez Crespo">
-  <meta property="og:url" content="https://zyth0s.github.io/project/solar-system-simulation/">
-  <meta property="og:title" content="Solar System Simulation | Daniel Menéndez Crespo">
-  <meta property="og:description" content="A script to simulate planet motion. Plots the solar system at a given moment in time."><meta property="og:image" content="https://zyth0s.github.io/project/solar-system-simulation/featured.png">
-  <meta property="twitter:image" content="https://zyth0s.github.io/project/solar-system-simulation/featured.png"><meta property="og:locale" content="en-us">
+  <meta property="og:url" content="https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/">
+  <meta property="og:title" content="Variational Quantum Eigensolver for Ising Hamiltonians | Daniel Menéndez Crespo">
+  <meta property="og:description" content="Jupyter notebook here.
+Variational Quantum Eigensolver (VQE) algorithm is a quantum realization of the traditional Ritz method.
+A more lengthy explanation is given by Michał Stęchły. Here I will just work out how it operates."><meta property="og:image" content="https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-12-28T08:25:09&#43;00:00">
+      <meta property="article:published_time" content="2020-12-29T09:54:08&#43;00:00">
     
-    <meta property="article:modified_time" content="2020-12-28T08:25:09&#43;00:00">
+    <meta property="article:modified_time" content="2020-12-29T09:54:08&#43;00:00">
   
 
   
@@ -309,20 +314,16 @@
   "@type": "Article",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://zyth0s.github.io/project/solar-system-simulation/"
+    "@id": "https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/"
   },
-  "headline": "Solar System Simulation",
+  "headline": "Variational Quantum Eigensolver for Ising Hamiltonians",
   
-  "image": [
-    "https://zyth0s.github.io/project/solar-system-simulation/featured.png"
-  ],
-  
-  "datePublished": "2020-12-28T08:25:09Z",
-  "dateModified": "2020-12-28T08:25:09Z",
+  "datePublished": "2020-12-29T09:54:08Z",
+  "dateModified": "2020-12-29T09:54:08Z",
   
   "author": {
     "@type": "Person",
-    "name": "Daniel Menendez Crespo"
+    "name": "Daniel Menéndez Crespo"
   },
   
   "publisher": {
@@ -333,7 +334,7 @@
       "url": "https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "A script to simulate planet motion. Plots the solar system at a given moment in time."
+  "description": "Jupyter notebook here.\nVariational Quantum Eigensolver (VQE) algorithm is a quantum realization of the traditional Ritz method.\nA more lengthy explanation is given by Michał Stęchły. Here I will just work out how it operates."
 }
 </script>
 
@@ -351,7 +352,7 @@
 
 
 
-  <title>Solar System Simulation | Daniel Menéndez Crespo</title>
+  <title>Variational Quantum Eigensolver for Ising Hamiltonians | Daniel Menéndez Crespo</title>
 
 </head>
 
@@ -729,38 +730,22 @@
 
 
 
-
-
-
-
-
-
-
+  
 
   
   
-
-
+  
 <div class="article-container pt-3">
-  <h1>Solar System Simulation</h1>
+  <h1>Variational Quantum Eigensolver for Ising Hamiltonians</h1>
 
   
 
   
+    
 
 
 <div class="article-metadata">
 
-  
-  
-  
-  
-  <div>
-    
-
-  <span >
-      Daniel Menendez Crespo</span>
-  </div>
   
   
 
@@ -770,7 +755,7 @@
     
       
     
-    Dec 28, 2020
+    Dec 29, 2020
   </span>
   
 
@@ -788,12 +773,12 @@
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/category/solar-dynamics/">Solar Dynamics</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/category/quantum-computing/">Quantum Computing</a></span>
   
 
 </div>
 
-  
+    
 
 
 
@@ -864,23 +849,16 @@
   
     
   
-  <a class="btn btn-outline-primary my-1 mr-1" href="https://github.com/zyth0s/SciAlgs.jl/blob/master/src/Astro/planets_motion.jl" target="_blank" rel="noopener">
+  <a class="btn btn-outline-primary my-1 mr-1" href="https://github.com/zyth0s/SciAlgs.jl/blob/master/src/QM/tutorial_quantum_computing_2.ipynb" target="_blank" rel="noopener">
     
-    Code
+    Tutorial
   </a>
 
 
 </div>
 
 
-</div>
-
-
-<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 500px; max-height: 400px;">
-  <div style="position: relative">
-    <img src="/project/solar-system-simulation/featured.png" alt="Solar system on 1993-9-25 17:32 British Summer Time (GMT&#43;1)" class="featured-image">
-    
-  </div>
+  
 </div>
 
 
@@ -888,7 +866,149 @@
   <div class="article-container">
 
     <div class="article-style">
-      <p>A <a href="https://github.com/zyth0s/SciAlgs.jl/blob/master/src/Astro/planets_motion.jl" target="_blank" rel="noopener">script</a> to simulate planet motion. Plots the solar system at a given moment in time.</p>
+      <p>Jupyter notebook <a href="https://github.com/zyth0s/SciAlgs.jl/blob/master/src/QM/tutorial_quantum_computing_2.ipynb" target="_blank" rel="noopener">here</a>.</p>
+<p>Variational Quantum Eigensolver (VQE) algorithm is a quantum realization of the traditional Ritz method.</p>
+<p>A more lengthy explanation is given by <a href="https://www.mustythoughts.com/variational-quantum-eigensolver-explained" target="_blank" rel="noopener">Michał Stęchły</a>.
+Here I will just work out how it operates.</p>
+<blockquote>
+<p>Ising hamiltonians are the easiest to map to quantum circuits and learning how to encode
+them will help us with more complicated hamiltonians.</p>
+</blockquote>
+<pre><code class="language-julia">using LinearAlgebra: I, tr
+</code></pre>
+<pre><code class="language-julia"># Computational basis
+𝟎 = [1,0]
+𝟏 = [0,1]
+</code></pre>
+<pre><code class="language-julia">X = [0 1; 1 0]
+Z = [1 0; 0 -1] # we measure in Z basis
+</code></pre>
+<pre><code class="language-julia">H = [1 1; 1 -1]/√2
+p = H * 𝟎 # = |+⟩
+m = H * 𝟏 # = |-⟩
+</code></pre>
+<h2 id="rotate-qubits-to-measure-other-pauli-matrices-than-sigma_x">Rotate qubits to measure other Pauli matrices (than $\sigma_x$)</h2>
+<p>As an example, if we measure in the Z basis its not possible to distinguish between $|+\rangle$ and
+$|-\rangle$.</p>
+<pre><code class="language-julia">@info &quot;⟨+|Z|+⟩ ≈ ⟨-|Z|-⟩&quot;, p'*Z*p ≈ m'* Z*m
+</code></pre>
+<pre><code>┌ Info: (&quot;⟨+|Z|+⟩ ≈ ⟨-|Z|-⟩&quot;, true)
+</code></pre>
+<p>Rotating the basis in a certain way allows us to unequivocally distinguish them.</p>
+<pre><code class="language-julia">Ry(θ) = [cos(θ/2) -sin(θ/2); sin(θ/2) cos(θ/2)]
+</code></pre>
+<pre><code class="language-julia">@assert Ry(π/2)*p ≈ 𝟏
+@assert Ry(π/2)*m ≈ 𝟎
+</code></pre>
+<pre><code class="language-julia">p_rot = Ry(-π/2)*p
+m_rot = Ry(-π/2)*m
+@info &quot;⟨+|Z|Ry(-π/2)|+⟩ ≈ ⟨-|Z|Ry(-π/2)|-⟩&quot;, p_rot'*Z*p_rot ≈ m_rot'* Z*m_rot
+@info &quot;Outcome of ⟨+|Z|Ry(-π/2)|+⟩ = &quot;, p_rot'*Z*p_rot
+@info &quot;Outcome of ⟨-|Z|Ry(-π/2)|-⟩ = &quot;, m_rot'* Z*m_rot
+</code></pre>
+<pre><code>┌ Info: (&quot;⟨+|Z|Ry(-π/2)|+⟩ ≈ ⟨-|Z|Ry(-π/2)|-⟩&quot;, false)
+┌ Info: (&quot;Outcome of ⟨+|Z|Ry(-π/2)|+⟩ = &quot;, 0.9999999999999998)
+┌ Info: (&quot;Outcome of ⟨-|Z|Ry(-π/2)|-⟩ = &quot;, -0.9999999999999998)
+</code></pre>
+<p>The solution is to apply</p>
+<ul>
+<li>$R_y(−\pi/2)$      if Hamiltonian has $\hat{X}$</li>
+<li>$R_x(\pi/2)$       if Hamiltonian has $\hat{Y}$</li>
+<li>$I$                if Hamiltonian has $\hat{Z}$</li>
+</ul>
+<p>before measurement. Consequently, the circuit will be different for each Pauli
+matrix.</p>
+<h2 id="divide-the-hamiltonian-into-single-pauli-terms">Divide the Hamiltonian into single Pauli terms</h2>
+<pre><code class="language-julia">𝓗₁ = 2Z
+𝓗₂ = X
+𝓗₃ = I(2)
+𝓗 = 𝓗₁ + 𝓗₂ + 𝓗₃
+@assert 𝓗 ≈ [3 1; 1 -1]
+</code></pre>
+<h2 id="initial-state">Initial state</h2>
+<p>We use a parametrized initial wavefunction for reasons that will be explained
+later but you can already guess that we will do a variational search.</p>
+<pre><code class="language-julia"># Ansatz will be Ry(θ)*𝟎
+ansatz(θ) = Ry(θ)*𝟎
+</code></pre>
+<h2 id="a-circuit-for-each-term">A circuit for each term</h2>
+<pre><code class="language-julia">function vqe(θ, verbose=false)
+
+   verbose &amp;&amp; @info &quot;θ = $(θ[1])&quot;
+   # Circuit for 𝓗₁: ψ ---[ h₁ )===
+
+   ψ = ansatz(θ[1])
+
+   h₁ = 2ψ' * Z * ψ
+   verbose &amp;&amp; @info &quot;  E₁ = $h₁&quot;
+
+   # Circuit for 𝓗₂: ψ ---[ Ry ]---[ h₂ )===
+
+   ψ = Ry(-π/2)*ansatz(θ[1])
+
+   h₂ = ψ' * Z * ψ
+   verbose &amp;&amp; @info &quot;  E₂ = $h₂&quot;
+
+   # Circuit for 𝓗₃:
+
+   h₃ = 1
+   verbose &amp;&amp; @info &quot;  E₃ = $h₃&quot;
+
+   verbose &amp;&amp; @info &quot;  ⟨ψ($θ[1])|𝓗|ψ($θ[1])⟩ = $(h₁ + h₂ + h₃)&quot;
+   h₁ + h₂ + h₃
+end
+</code></pre>
+<p>For two single parameter values we have</p>
+<pre><code class="language-julia">vqe([0],true)
+vqe([π],true)
+</code></pre>
+<pre><code>┌ Info: θ = 0
+┌ Info:   E₁ = 2.0
+┌ Info:   E₂ = 2.220446049250313e-16
+┌ Info:   E₃ = 1
+┌ Info:   ⟨ψ([0][1])|𝓗|ψ([0][1])⟩ = 3.0
+┌ Info: θ = π
+┌ Info:   E₁ = -2.0
+┌ Info:   E₂ = -2.220446049250313e-16
+┌ Info:   E₃ = 1
+┌ Info:   ⟨ψ([π][1])|𝓗|ψ([π][1])⟩ = -1.0
+</code></pre>
+<pre><code class="language-julia">using Optim
+</code></pre>
+<pre><code class="language-julia">result = optimize(vqe, [0.0], BFGS())
+</code></pre>
+<pre><code> * Status: success
+
+ * Candidate solution
+    Final objective value:     -1.236068e+00
+
+ * Found with
+    Algorithm:     BFGS
+
+ * Convergence measures
+    |x - x'|               = 6.65e-06 ≰ 0.0e+00
+    |x - x'|/|x'|          = 2.48e-06 ≰ 0.0e+00
+    |f(x) - f(x')|         = 4.94e-11 ≰ 0.0e+00
+    |f(x) - f(x')|/|f(x')| = 4.00e-11 ≰ 0.0e+00
+    |g(x)|                 = 1.37e-11 ≤ 1.0e-08
+
+ * Work counters
+    Seconds run:   0  (vs limit Inf)
+    Iterations:    4
+    f(x) calls:    10
+    ∇f(x) calls:   10
+</code></pre>
+<pre><code class="language-julia">θ_opt = Optim.minimizer(result)[1]
+energy_opt = Optim.minimum(result)
+@info &quot;VQE: θ* = $θ_opt, E* = $energy_opt&quot;
+</code></pre>
+<pre><code>┌ Info: VQE: θ* = -2.6779450445907376, E* = -1.2360679774997898
+</code></pre>
+<h2 id="more-advanced-hamiltonians">More advanced hamiltonians</h2>
+<p>Fermionic operators can be transformed into Ising-type hamiltonians in several ways.
+The most common are the Jordan-Wigner and Bravyi-Kitaev transformations.</p>
+<p>In this example we only had a single qubit but it can be extended
+to multiple qubits.</p>
 
     </div>
 
@@ -901,7 +1021,7 @@
 
 <div class="article-tags">
   
-  <a class="badge badge-light" href="/tag/solar-dynamics/">Solar Dynamics</a>
+  <a class="badge badge-light" href="/tag/quantum-computing/">Quantum Computing</a>
   
 </div>
 
@@ -918,7 +1038,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://zyth0s.github.io/project/solar-system-simulation/&amp;text=Solar%20System%20Simulation" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/&amp;text=Variational%20Quantum%20Eigensolver%20for%20Ising%20Hamiltonians" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -931,7 +1051,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://zyth0s.github.io/project/solar-system-simulation/&amp;t=Solar%20System%20Simulation" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/&amp;t=Variational%20Quantum%20Eigensolver%20for%20Ising%20Hamiltonians" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -944,7 +1064,7 @@
       
       
       <li>
-        <a href="mailto:?subject=Solar%20System%20Simulation&amp;body=https://zyth0s.github.io/project/solar-system-simulation/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Variational%20Quantum%20Eigensolver%20for%20Ising%20Hamiltonians&amp;body=https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -957,7 +1077,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://zyth0s.github.io/project/solar-system-simulation/&amp;title=Solar%20System%20Simulation" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/&amp;title=Variational%20Quantum%20Eigensolver%20for%20Ising%20Hamiltonians" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -970,7 +1090,7 @@
       
       
       <li>
-        <a href="whatsapp://send?text=Solar%20System%20Simulation%20https://zyth0s.github.io/project/solar-system-simulation/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="whatsapp://send?text=Variational%20Quantum%20Eigensolver%20for%20Ising%20Hamiltonians%20https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -983,7 +1103,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://zyth0s.github.io/project/solar-system-simulation/&amp;title=Solar%20System%20Simulation" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/&amp;title=Variational%20Quantum%20Eigensolver%20for%20Ising%20Hamiltonians" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -1003,27 +1123,109 @@
 
   
   
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://zyth0s.github.io"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hu52a603635ecebd45650b162dadabb4e5_12861_270x270_fill_q75_lanczos_center.jpg" alt="Daniel Menéndez Crespo"></a>
     
 
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://zyth0s.github.io">Daniel Menéndez Crespo</a></h5>
+      <h6 class="card-subtitle">Postdoctoral Associate</h6>
+      <p class="card-text">My research interests include topological quantum chemistry, chemical bonding and scientific computing..</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/ddanieru" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/zyth0s" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/project/quantum-teleportation-tutorial/">Quantum Teleportation Tutorial</a></li>
+      
+    </ul>
+  </div>
   
 
 

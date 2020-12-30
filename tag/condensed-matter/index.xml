@@ -18,6 +18,457 @@
       <pubDate>Mon, 28 Dec 2020 12:20:55 +0000</pubDate>
       <guid>https://zyth0s.github.io/project/tight-binding-tutorial/</guid>
       <description>&lt;p&gt;The tutorial is &lt;a href=&#34;https://github.com/zyth0s/SciAlgs.jl/blob/master/src/QM/tutorial_tight_binding.ipynb&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;hosted in GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The tight binding method expands orbitals as a linear combination of atomic orbitals
+(LCAO) - in the strict sense. AOs are not replaced by a fitted basis set.
+The set of AOs is often minimal and the set of MOs/COs is reduced to a subset
+around the chemical potential, e.g. only π orbitals in a polymer chain.
+Frequently, only interactions with the first coordination shells are included.
+Under some asumptions it is equivalent to Hückel&amp;rsquo;s method.&lt;/p&gt;
+&lt;p&gt;We load linear algebra and plotting libraries first.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;using Pkg; Pkg.add(&amp;quot;Measures&amp;quot;)
+Pkg.add(&amp;quot;Parameters&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;using LinearAlgebra
+using Plots
+using Measures: mm
+using Parameters
+import PyPlot
+pyplt = PyPlot
+mpl = PyPlot.matplotlib
+pyplt.matplotlib.style.reload_library()
+pyplt.matplotlib.style.use(&amp;quot;sci&amp;quot;)
+mpl.use(backend=&amp;quot;Qt5Agg&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To plot the density of states we need to broaden/smear the spectral lines.
+The line shape observed is broadened by Doppler, &amp;hellip;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;include(&amp;quot;dos_broadening.jl&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In this tutorial we will neglect all electron-electron interactions, focusing
+only in kinetic electron energy and electron-external potential.
+We talk about sites rather than atoms because we neglect spatial dimension.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;chain-of-2-sites&#34;&gt;Chain of 2 sites&lt;/h2&gt;
+&lt;p&gt;A chain of 2 sites, one with reference energy 0, and the other Δ higher
+has a simple tight binding hamiltonian&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;function buildH2(Δ,t)
+  # He⁺
+  [ 0 t; t Δ]
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;where t is the hopping parameter.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;# Two atomic orbitals at sites 1 and 2
+t = 0; Δ = 2
+println(&amp;quot;A.1.  t = $t, Δ = $Δ&amp;quot;)
+H = buildH2(Δ,t)
+es, vs = eigen(H)
+for i in 1:length(es)
+  println(&amp;quot;Eigenstate with E = $(es[i]) and vector $(vs[i,:])&amp;quot;)
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;A.1.  t = 0, Δ = 2
+Eigenstate with E = 0.0 and vector [1.0, 0.0]
+Eigenstate with E = 2.0 and vector [0.0, 1.0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;example-1&#34;&gt;Example 1&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;t = 2; Δ = 0
+println(&amp;quot;A.2. t = $t, Δ = $Δ&amp;quot;)
+H = buildH2(Δ,t)
+es, vs = eigen(H)
+for i in 1:length(es)
+  println(&amp;quot;Eigenstate with E = $(es[i]) and vector $(vs[i,:])&amp;quot;)
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;A.2. t = 2, Δ = 0
+Eigenstate with E = -2.0 and vector [-0.7071067811865475, 0.7071067811865475]
+Eigenstate with E = 2.0 and vector [0.7071067811865475, 0.7071067811865475]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;example-2&#34;&gt;Example 2&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;t = 1; Δ = 10
+println(&amp;quot;A.3.  t &amp;lt;&amp;lt; Δ; t = $t, Δ = $Δ&amp;quot;)
+H = buildH2(Δ,t)
+es, vs = eigen(H)
+for i in 1:length(es)
+  println(&amp;quot;Eigenstate with E = $(es[i]) and vector $(vs[i,:])&amp;quot;)
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;A.3.  t &amp;lt;&amp;lt; Δ; t = 1, Δ = 10
+Eigenstate with E = -0.09901951359278481 and vector [-0.9951333266680701, 0.09853761796664214]
+Eigenstate with E = 10.099019513592786 and vector [0.09853761796664214, 0.9951333266680701]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;three-sites&#34;&gt;Three sites&lt;/h2&gt;
+&lt;p&gt;Three sites (with open boundary) and site energies 0, Δ1, Δ2,
+hoping constants t&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;function buildHchain3(Δ1,Δ2,t12,t23)
+  [  0 t12   0;
+   t12  Δ1 t23;
+     0 t23  Δ2]
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;3-site-ring&#34;&gt;3 site ring&lt;/h2&gt;
+&lt;p&gt;If the sites are forming a ring (periodic boundary conditions)
+there are hoping matrix elements at the lower-left and upper-right
+corners. The hamiltonian matrix is circulant rather than Toeplitz-like.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;function buildHring3(Δ1,Δ2,t12,t13,t23)
+  [  0 t12 t13;
+   t12  Δ1 t23;
+   t13 t23  Δ2]
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;example-3-centers-1-electron&#34;&gt;Example: 3 centers 1 electron&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;println(&amp;quot;B.1. Δ₁ = 2, Δ₂ = 5, t₁₂ = 1, t₁₃ = 2, t₂₃ = 1&amp;quot;)
+H = buildHring3(2,5,1,2,1)
+es, vs = eigen(H)
+for i in 1:length(es)
+  println(&amp;quot;Eigenstate with E = $(es[i]) and vector $(vs[i,:])&amp;quot;)
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;B.1. Δ₁ = 2, Δ₂ = 5, t₁₂ = 1, t₁₃ = 2, t₂₃ = 1
+Eigenstate with E = -0.8460273610588649 and vector [-0.932296868605906, -0.12026011521212177, 0.34111589449450974]
+Eigenstate with E = 1.7430864995096744 and vector [0.22929082064416684, -0.9258926649319276, 0.3002473856565238]
+Eigenstate with E = 6.102940861549199 and vector [0.2797289194129681, 0.35813444083810214, 0.890781372688963]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;large-homoatomic-ring&#34;&gt;Large homoatomic ring&lt;/h2&gt;
+&lt;p&gt;A large homoatomic ring  (circulant matrix)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;function buildHring(t,N=1001)
+  H = SymTridiagonal(zeros(N),t*ones(N-1))
+  H = convert(Matrix,H)
+  H[N,1] = H[1,N] = t
+  H
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;example&#34;&gt;Example&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;t = 2.5; N = 1001
+println(&amp;quot;C.1. Ring with $N sites and t = $t&amp;quot;)
+H = buildHring(t,N)
+es, vs = eigen(H)
+W = 2abs(t) # half-bandwith
+band = scatter(es, xlabel=&amp;quot;Site&amp;quot;, ylabel=&amp;quot;Energy&amp;quot;,ms=2,leg=false,
+               ylims=(-W-1,W+1))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;C.1. Ring with 1001 sites and t = 2.5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./tutorial_tight_binding_29_1.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;e_dos, dos = dos_broadening(es)
+dos = plot(dos,e_dos, ylabel=&amp;quot;Energy&amp;quot;, xlabel=&amp;quot;DOS&amp;quot;,leg=false,
+            ylims=(-W-1,W+1))
+l = @layout [ a b]
+plot(band,dos,layout=l)
+savefig(&amp;quot;../figures/C.1_bandos_ring_t=$(t)_N=$(N)_E0=0.pdf&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;large-ring-with-an-impurity&#34;&gt;Large ring with an impurity&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;# If the ring has an impurity in the middle
+function buildHring_impurity(t,Δ,N=1001)
+  H = SymTridiagonal(zeros(N),t*ones(N-1))
+  H = convert(Matrix,H)
+  H[N,1] = H[1,N] = t
+  H[N÷2,N÷2] = Δ
+  H
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;t = 2.5; N = 1001; Δ = -2; impuritysite = N÷2
+println(&amp;quot;C.2. Ring with $N sites with t = $t, impurity at $impuritysite Δ = $Δ&amp;quot;)
+H = buildHring_impurity(t,Δ,N)
+es, vs = eigen(H)
+println(&amp;quot;Impurity state with E = $(es[1])&amp;quot;)
+W = 2abs(t) # half-bandwith
+band = scatter(es, xlabel=&amp;quot;Site&amp;quot;, ylabel=&amp;quot;Energy&amp;quot;,ms=2,leg=false,
+               ylims=(-W-1,W+1))
+e_dos, dos = dos_broadening(es)
+dos = plot(dos,e_dos, ylabel=&amp;quot;Energy&amp;quot;, xlabel=&amp;quot;DOS&amp;quot;,leg=false,
+     ylims=(-W-1,W+1))
+l = @layout [ a b]
+plot(band,dos,layout=l)
+#savefig(&amp;quot;../figures/C.2_bandos_ring_t=$(t)_N=$(N)_E0=0_middleimpurity=$Δ.pdf&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;C.2. Ring with 1001 sites with t = 2.5, impurity at 500 Δ = -2
+Impurity state with E = -5.385164807134497
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./tutorial_tight_binding_33_1.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;plot(vs[:,1].*vs[:,1],xlims=(490,510), label=&amp;quot;Bound state&amp;quot;,
+     ylabel=&amp;quot;Probability&amp;quot;,xlabel=&amp;quot;Site&amp;quot;,
+     title=&amp;quot;Contribution of site orbitals to impurity state&amp;quot;)
+#savefig(&amp;quot;../figures/C.2_boundstate_ring_t=$(t)_N=$(N)_E0=0_middleimpurity=$Δ.pdf&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./tutorial_tight_binding_34_0.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;generic-tight-binding-procedure&#34;&gt;Generic tight binding procedure&lt;/h2&gt;
+&lt;p&gt;Generic function to solve tight-binding
+hamiltonian, and plot bands, DOS, and PDOS.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;function tight_binding(hamiltonianConstructor::Function,params,name)
+   @unpack t, N, Δ, impuritysite = params
+   if ismissing(Δ)
+      println(&amp;quot;$name with $N sites with t = $t&amp;quot;)
+   else
+      println(&amp;quot;$name with $N sites with t = $t, impurity at $impuritysite, Δ = $Δ&amp;quot;)
+   end
+   H = hamiltonianConstructor(params...)
+   es, vs = eigen(H)
+   W = 2abs(t) # half-bandwith 1D
+   emargin = 1.5
+   println(&amp;quot;Lowest energy state with E = $(es[1])&amp;quot;, es[1]&amp;lt;-W ? &amp;quot; (surface state)&amp;quot; : &amp;quot;&amp;quot;)
+   band = scatter(es, xlabel=&amp;quot;Site&amp;quot;, ylabel=&amp;quot;Energy&amp;quot;,ms=2,leg=false,
+                  ylims=(-W-emargin,W+emargin))
+
+   e_dos, dos = dos_broadening(es)
+   dos = plot(dos,e_dos, xlabel=&amp;quot;DOS&amp;quot;,leg=false,
+              xlims=(0,1),ylims=(-W-emargin,W+emargin))
+
+   e_pdos1, pdos1 = dos_broadening(es,vs[1,:].*vs[1,:])
+   pdos = plot(pdos1,e_pdos1,label=&amp;quot;Site 1&amp;quot;, ylims=(-W-emargin,W+emargin))
+   e_pdos500, pdos500 = dos_broadening(es,vs[N÷2,:].*vs[N÷2,:])
+   pdos = plot!(pdos, pdos500, e_pdos500, label=&amp;quot;Site $(N÷2)&amp;quot;,
+                xlims=(0,0.0013),
+                xlabel=&amp;quot;PDOS&amp;quot;)
+
+   l = @layout [ a b c]
+   plot(band,dos,pdos, layout=l, size=(1200,400),
+        left_margin=5mm,bottom_margin=5mm,
+        right_margin=0mm,top_margin=0mm)
+   #if ismissing(impuritysite)
+   #   savefig(&amp;quot;../figures/$(name)_t=$(t)_N=$(N)_E0=0.pdf&amp;quot;)
+   #else
+   #   savefig(&amp;quot;../figures/$(name)_t=$(t)_N=$(N)_E0=0_@$(impuritysite)=$Δ.pdf&amp;quot;)
+   #end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;large-chain-with-an-impurity-state&#34;&gt;Large chain with an impurity state&lt;/h1&gt;
+&lt;p&gt;A long chain considering only nearest-neighbors
+hopings, all equal, with the possibility of having
+an impurity in the middle&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;function buildHchain_tridiag(t,N=1001)
+  H = SymTridiagonal(zeros(N),t*ones(N-1))
+end
+function buildHchain(t,N=1001,Δ=missing,impuritysite=missing)
+  if ismissing(Δ)
+     # homoatomic chain
+     return buildHchain_tridiag(t,N)
+  end
+  H = SymTridiagonal(zeros(N),t*ones(N-1))
+  H = convert(Matrix,H)
+  H[impuritysite,impuritysite] = Δ
+  H
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We will explore Schokley/Tamm surface states&lt;/p&gt;
+&lt;h4 id=&#34;example-d1-chain-without-impurity&#34;&gt;Example D.1: Chain without impurity&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;name = &amp;quot;D.1. Chain&amp;quot;
+params = (t=2.5,N=1001,Δ=missing,impuritysite=missing)
+tight_binding(buildHchain,params,name)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;D.1. Chain with 1001 sites with t = 2.5
+Lowest energy state with E = -4.999975424409872
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./tutorial_tight_binding_43_1.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;example-d2-impurity-in-the-middle&#34;&gt;Example D.2: Impurity in the middle&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;name = &amp;quot;D.2. Chain&amp;quot;
+params = (t=2.5,N=1001,Δ=-2,impuritysite=500)
+tight_binding(buildHchain,params,name)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;D.2. Chain with 1001 sites with t = 2.5, impurity at 500, Δ = -2
+Lowest energy state with E = -5.385164807134504 (surface state)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./tutorial_tight_binding_45_1.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;example-d3-impurity-at-the-surface&#34;&gt;Example D.3: Impurity at the surface&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;name = &amp;quot;D.3. Chain&amp;quot;
+params = (t=2.5,N=1001,Δ=-2,impuritysite=1)
+tight_binding(buildHchain,params,name)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;D.3. Chain with 1001 sites with t = 2.5, impurity at 1, Δ = -2
+Lowest energy state with E = -4.99997561943913
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./tutorial_tight_binding_47_1.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;example-d4-impurity-at-the-surface-strong-impurity&#34;&gt;Example D.4: Impurity at the surface, strong impurity&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;name = &amp;quot;D.4. Chain&amp;quot;
+params = (t=2.5,N=1001,Δ=-4,impuritysite=1)
+tight_binding(buildHchain,params,name)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;D.4. Chain with 1001 sites with t = 2.5, impurity at 1, Δ = -4
+Lowest energy state with E = -5.562499999999997 (surface state)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./tutorial_tight_binding_49_1.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Finite effects are also interesting&lt;/p&gt;
+&lt;h4 id=&#34;example-e1-finite-chain&#34;&gt;Example E.1: Finite chain&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;name = &amp;quot;E.1. Finite Chain&amp;quot;
+params = (t=2.5,N=9,Δ=-2,impuritysite=1)
+tight_binding(buildHchain,params,name)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;E.1. Finite Chain with 9 sites with t = 2.5, impurity at 1, Δ = -2
+Lowest energy state with E = -4.853039707148026
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./tutorial_tight_binding_52_1.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;example-e2-finite-chain&#34;&gt;Example E.2: Finite chain&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;name = &amp;quot;E.2. Finite Chain&amp;quot;
+params = (t=2.5,N=9,Δ=-4,impuritysite=1)
+tight_binding(buildHchain,params,name)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;E.2. Finite Chain with 9 sites with t = 2.5, impurity at 1, Δ = -4
+Lowest energy state with E = -5.562184783729448 (surface state)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./tutorial_tight_binding_54_1.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;2-sites-per-cell-with-s-orbitals&#34;&gt;2 sites per cell with s orbitals&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;function tight_binding_1D_2sites(a,Δ₁₂,t)
+   # 1D chain/ring with 2 sites per unit cell, s orbitals
+   b = 2a # unit cell with two sites
+   ε1 = 0 # without loss of generality energy reference at 0
+   ε2 = Δ₁₂
+
+   kpath = range(-π/b,π/b,length=100)
+   Enk = zeros(2,length(kpath))
+
+   for (ik,k) in enumerate(kpath)
+      H_k = [     ε1        2t*cos(k*a);
+              2t*cos(k*a)       ε2      ]
+      e, vs = eigen(H_k)
+      Enk[:,ik] = e
+   end
+
+   plot(kpath/π,[Enk[1,:], Enk[2,:]],
+        label=[&amp;quot;Ground state&amp;quot; &amp;quot;Excited state&amp;quot;],
+        xlabel=&amp;quot;k pi/a&amp;quot;, ylabel=&amp;quot;Energy&amp;quot;,
+        leg = :inside,
+       )
+   #savefig(&amp;quot;../figures/1d_2sites.pdf&amp;quot;)
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;example-3&#34;&gt;Example&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;tight_binding_1D_2sites(1,2,2) # a, Δ₁₂, t
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./tutorial_tight_binding_58_0.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;2-sites-per-cell-with-s-and-p-orbitals&#34;&gt;2 sites per cell with s and p orbitals&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;function tight_binding_1D_2sites_sp_orbs(a,Δ₁₂,t)
+   # 1D chain/ring with 2 sites per unit cell, sp orbitals
+   # Redefined ψpk = i 1/√N * ∑R₂ exp(ikR₂) ϕp(r-R₂) to have a real matrix
+   b = 2a # unit cell with two sites
+   εs = Δ₁₂
+   εp = 0 # without loss of generality energy reference at 0
+
+   kpath = range(-π/b,π/b,length=100)
+   Enk = zeros(2,length(kpath))
+
+   for (ik,k) in enumerate(kpath)
+      H_k = [      εs        -2t*sin(k*a);
+              -2t*sin(k*a)        εp      ]
+      e, vs = eigen(H_k)
+      Enk[:,ik] = e
+   end
+
+   plot(kpath/π,[Enk[1,:], Enk[2,:]],
+        label=[&amp;quot;p state&amp;quot; &amp;quot;s state&amp;quot;],
+        xlabel=&amp;quot;k pi/a&amp;quot;, ylabel=&amp;quot;Energy&amp;quot;,
+        leg = :right,
+       )
+   #savefig(&amp;quot;../figures/1d_2sites_sp_orbs.pdf&amp;quot;)
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;tight_binding_1D_2sites_sp_orbs(1,2,2) # a, Δ₁₂, t
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./tutorial_tight_binding_61_0.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;2d&#34;&gt;2D&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;function tight_binding_2D(a,b,Δ₁₂,ta,tb)
+   # 2D rectangular lattice with 1 site per unit cell, s orbitals
+   @assert a == b # does not handle rectangular with analytic formula
+   @assert Δ₁₂ == 0 # does not handle ≠ ε with analytic formula
+   ε1 = 0 # without loss of generality energy reference at 0
+   ε2 = Δ₁₂
+
+   Hamiltonian(kx,ky) = [               ε1               2ta*cos(kx*a) + 2tb*cos(ky*b);
+                         2ta*cos(kx*a) + 2tb*cos(ky*b)                  ε2            ]
+
+   # ............................
+   # Band plot
+   nkpts = 100
+   kpath = zeros(2,3nkpts)
+   kpath[1,  1:nkpts]  = range(0,π/a,length=nkpts)
+   kpath[2,  1:nkpts] .= 0
+   #
+   kpath[1,(nkpts+1):2nkpts] .= π/a
+   kpath[2,(nkpts+1):2nkpts]  = range(0,π/b,length=nkpts)
+   #
+   kpath[1,(2nkpts+1):3nkpts]  = range(π/a,0,length=nkpts)
+   kpath[2,(2nkpts+1):3nkpts]  = range(π/b,0,length=nkpts)
+   Enk = zeros(2,3nkpts)
+
+   for ik in 1:3nkpts
+      kx = kpath[1,ik]
+      ky = kpath[2,ik]
+      H_k = Hamiltonian(kx,ky)
+      e, vs = eigen(H_k)
+      #Enk[:,ik] = e # FIXME
+      Enk[1,ik] = ε1 + ε2 - 2abs(ta)*cos(kx*a) - 2abs(tb)*cos(ky*b) # analytic formula
+   end
+
+   #plot(1:3nkpts,[Enk[1,:],Enk[2,:]],
+   #plot(1:3nkpts,Enk[1,:],
+   #     label=[&amp;quot;Ground state&amp;quot; &amp;quot;Excited state&amp;quot;],
+   #     xlabel=&amp;quot;kpath/pi&amp;quot;, ylabel=&amp;quot;Energy&amp;quot;,
+   #     leg = :inside,
+   #    )
+   #savefig(&amp;quot;2d_1sites.pdf&amp;quot;)
+   fig = pyplt.figure()
+   fig.set_dpi(260)
+   ax = fig.add_subplot(111)
+   ax.plot(1:3nkpts,Enk[1,:], label=&amp;quot;Ground state&amp;quot;)
+   ax.xaxis.set_major_locator(mpl.ticker.MultipleLocator(100))
+   ax.set_xticklabels([&amp;quot;d&amp;quot;,&amp;quot;(0,0)T&amp;quot;, &amp;quot;(1,0)T&amp;quot;, &amp;quot;(1,1)T&amp;quot;, &amp;quot;(0,0)T&amp;quot;])
+   ax.set_xlim(0,3nkpts)
+   ax.set_ylim(-2abs(ta)-2abs(tb),2abs(ta)+2abs(tb))
+   ax.grid(true)
+   ax.set_xlabel(&amp;quot;(kx,ky)T pi/a&amp;quot;)
+   ax.set_ylabel(&amp;quot;Energy&amp;quot;)
+   fig.tight_layout(pad=0.1)
+   pyplt.savefig(&amp;quot;../figures/2d_1sites.pdf&amp;quot;)
+
+   # ..........................................................
+   # BZ integration
+   nmesh = 101
+   Enk = zeros(2,nmesh,nmesh)
+   kxrange = range(-π/a,π/a,length=nmesh)
+   kyrange = range(-π/b,π/b,length=nmesh)
+   for (ikx,kx) in enumerate(kxrange), 
+       (iky,ky) in enumerate(kyrange)
+      H_k = Hamiltonian(kx,ky)
+      #e, vs = eigen(H_k) # FIXME
+      ##_,_,eschur = schur(H_k)
+      Enk[1,ikx,iky] = ε1 + ε2 - 2abs(ta)*cos(kx*a) - 2abs(tb)*cos(ky*b) # analytic result a = b; ...
+      #if abs(kx) + abs(ky) &amp;lt; pi/a
+      #   Enk[:,ikx,iky] = e
+      #else
+      #   Enk[:,ikx,iky] = reverse(e)
+      #end
+      #isapprox(e[1] , ε1 + ε2 + 2ta*cos(kx*a) + 2tb*cos(ky*b), atol=1e-1) || error(&amp;quot;wrong eigenvalue $(e[1]) ≠ $(ε1 + ε2 + 2ta*cos(kx*a) + 2tb*cos(ky*b))&amp;quot;)
+      #@show kx, ky
+      #println(e[1],&amp;quot; &amp;quot;, e[2], &amp;quot; &amp;quot;, ε1 + ε2 - 2abs(ta)*cos(kx*a) - 2abs(tb)*cos(ky*b))
+      #e[1], e[2] = e[2], e[1]
+   end
+
+   fig = pyplt.figure()
+   fig.set_dpi(260)
+   ax = fig.add_subplot(111)
+   ax.set_aspect(&amp;quot;equal&amp;quot;)
+   cont = ax.contourf(kxrange./π,kyrange./π,Enk[1,:,:], levels=15)
+   #cont = ax.plot_surface(kxrange./π,kyrange./π,Enk[1,:,:])
+   #cont = ax.imshow(Enk[1,:,:],extent=(-1,1,-1,1))
+   # Set axis labels
+   ax.set_xlabel(&amp;quot;kx pi/a&amp;quot;)
+   ax.set_ylabel(&amp;quot;ky pi/b&amp;quot;)
+   pyplt.colorbar(cont,format=&amp;quot;%+3.1f&amp;quot;)
+   fig.tight_layout(pad=0.1)
+   pyplt.savefig(&amp;quot;../figures/2d_1sites_contour.pdf&amp;quot;)
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;tight_binding_2D(1,1,0,1,1) # a, b, Δ₁₂, ta, tb
+#tight_binding_2D(10,5,2,0.5,1) # a, b, Δ₁₂, ta, tb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./tutorial_tight_binding_64_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./tutorial_tight_binding_64_1.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
 </description>
     </item>
     

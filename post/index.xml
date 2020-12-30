@@ -17,13 +17,13 @@
       <link>https://zyth0s.github.io/post/spectral-decomposition-with-julia/</link>
       <pubDate>Mon, 28 Dec 2020 11:26:52 +0000</pubDate>
       <guid>https://zyth0s.github.io/post/spectral-decomposition-with-julia/</guid>
-      <description>&lt;p&gt;We briefly discuss how to diagonalize a symmetric square matrix into eigenvalues and eigenvectors, and some of the eigendecomposition properties.&lt;/p&gt;
+      <description>&lt;p&gt;We briefly discuss how to eigendecompose a symmetric square matrix, and check some of its properties.&lt;/p&gt;
 &lt;p&gt;Note about notation:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;vectors have a bar above, like $\bar{v}$.&lt;/li&gt;
-&lt;li&gt;matrices have a bar below, like $\underline{A}$.&lt;/li&gt;
-&lt;li&gt;scalars have no bar.&lt;/li&gt;
-&lt;li&gt;&#39; means (i) the complex conjugate for scalars, or (ii) the (conjugate) transpose for vectors/matrices.&lt;/li&gt;
+&lt;li&gt;vectors are bold lowercase, like $\mathbf{u,v}$.&lt;/li&gt;
+&lt;li&gt;matrices are bold uppercase, like $\mathbf{A,B,C}$.&lt;/li&gt;
+&lt;li&gt;scalars are lowercase, like $x,y,z$.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&#39;&lt;/code&gt; means (i) the complex conjugate for scalars, or (ii) the (conjugate) transpose for vectors/matrices.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;using LinearAlgebra: eigen, Diagonal, I, det, rank
 &lt;/code&gt;&lt;/pre&gt;
@@ -34,43 +34,43 @@
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;A = (A + A&#39;)/2
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;A $4 \times 4$ matrix has 4 eigenvalues $(e_1,e_2,e_3,e_4)$
-and 4 respective eigenvectors $(\bar{v}_1,\bar{v}_2,\bar{v}_3,\bar{v}_4)$&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;e, U = eigen(A) # solves $A̲v̄ = ev̄$
+and 4 respective eigenvectors $(\mathbf{v}_1,\mathbf{v}_2,\bar{v}_3,\mathbf{v}_4)$&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;e, U = eigen(A) # solves $Av = ev$
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;eigen&lt;/code&gt; returns the eigenvalues in a vector &lt;code&gt;e&lt;/code&gt; and
 the eigenvectors as columns of a matrix &lt;code&gt;U&lt;/code&gt;.
 E.g. the first eigenvalue is $e_1 =$ &lt;code&gt;e[1]&lt;/code&gt; and the first
-eigenvector is $\bar{v}_1 =$ &lt;code&gt;U[:,1]&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;We can check that the secular equation $|\underline{A} - e_i\underline{I}| = 0$ is satisfied (for each eigenvalue)&lt;/p&gt;
+eigenvector is $\mathbf{v}_1 =$ &lt;code&gt;U[:,1]&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;We can check that the secular equation $|\mathbf{A} - e_i\mathbf{I}| = 0$ is satisfied (for each eigenvalue)&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;for i in 1:4
    isapprox( det(A - e[i]*I), 0.00, atol=1e-4) || error(&amp;quot;Secular equation $i not satisfied&amp;quot;)
 end
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The corresponding eigenvectors satisfy $(\underline{A} - e_i\underline{I})\bar{v} = \bar{0}$&lt;/p&gt;
+&lt;p&gt;The corresponding eigenvectors satisfy $(\mathbf{A} - e_i\mathbf{I})\mathbf{v} = \mathbf{0}$&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;for i in 1:4
    isapprox( (A - e[i]*I)*U[:,i], fill(0.00,4), atol=1e-4) || error(&amp;quot;a) Eigenvalue equation $i not satisfied&amp;quot;)
 end
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;or equivalently $\underline{A}\bar{v} = e_i\bar{v}$&lt;/p&gt;
+&lt;p&gt;or equivalently $\mathbf{A}\mathbf{v} = e_i\mathbf{v}$&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;for i in 1:4
    isapprox( A*U[:,i], e[i]*U[:,i], atol=1e-4) || error(&amp;quot;b) Eigenvalue equation $i not satisfied&amp;quot;)
 end
 &lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
-&lt;li&gt;If $\underline{A}$ is symmetric, thus $\underline{U}$ is orthonormal and $\underline{U}&#39; = \underline{U}^{-1}$&lt;/li&gt;
-&lt;li&gt;If $\underline{A}$ is hermitic, thus $\underline{U}$ is unitary and $\underline{U}&#39; = \underline{U}^{-1}$&lt;/li&gt;
+&lt;li&gt;If $\mathbf{A}$ is symmetric, thus $\mathbf{U}$ is orthonormal and $\mathbf{U}&#39; = \mathbf{U}^{-1}$&lt;/li&gt;
+&lt;li&gt;If $\mathbf{A}$ is hermitic, thus $\mathbf{U}$ is unitary and $\mathbf{U}&#39; = \mathbf{U}^{-1}$&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;In both cases it can be described as a similarity transformation
-$$ \underline{A} = \underline{U} \underline{D} \underline{U}^{-1} = \underline{U} \underline{D} \underline{U}&#39; $$
-where $\underline{D}$ is a diagonal matrix with the eigenvalues as diagonal elements.
-Therefore, $\underline{D}$ is the matrix that diagonalizes $\underline{A}$.
-$\underline{A}$ and $\underline{D}$ are said to be similar matrices.&lt;/p&gt;
+$$ \mathbf{A} = \mathbf{U} \mathbf{D} \mathbf{U}^{-1} = \mathbf{U} \mathbf{D} \mathbf{U}&#39; $$
+where $\mathbf{D}$ is a diagonal matrix with the eigenvalues as diagonal elements.
+Therefore, $\mathbf{D}$ is the matrix that diagonalizes $\mathbf{A}$.
+$\mathbf{A}$ and $\mathbf{D}$ are said to be similar matrices.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;A ≈ U * Diagonal(e) * U&#39; || error(&amp;quot;Not a similarity transformation&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;A similarity transformation is also a conformal mapping. A matrix $\underline{W}$
+&lt;p&gt;A similarity transformation is also a conformal mapping. A matrix $\mathbf{W}$
 encoding a crystallographic symmetry operation is an isometry if
-$$ \underline{G} \approx \underline{W} \underline{G} \underline{W}&#39; $$
-where $\underline{G}$ is the metric tensor.&lt;/p&gt;
+$$ \mathbf{G} \approx \mathbf{W} \mathbf{G} \mathbf{W}&#39; $$
+where $\mathbf{G}$ is the metric tensor.&lt;/p&gt;
 </description>
     </item>
     

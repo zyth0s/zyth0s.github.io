@@ -5,7 +5,7 @@
     <link>https://zyth0s.github.io/tag/quantum-computing/</link>
       <atom:link href="https://zyth0s.github.io/tag/quantum-computing/index.xml" rel="self" type="application/rss+xml" />
     <description>Quantum Computing</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 28 Dec 2020 00:13:44 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 29 Dec 2020 09:54:08 +0000</lastBuildDate>
     <image>
       <url>https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Quantum Computing</title>
@@ -13,11 +13,553 @@
     </image>
     
     <item>
+      <title>Variational Quantum Eigensolver for Ising Hamiltonians</title>
+      <link>https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/</link>
+      <pubDate>Tue, 29 Dec 2020 09:54:08 +0000</pubDate>
+      <guid>https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/</guid>
+      <description>&lt;p&gt;Jupyter notebook &lt;a href=&#34;https://github.com/zyth0s/SciAlgs.jl/blob/master/src/QM/tutorial_quantum_computing_2.ipynb&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Variational Quantum Eigensolver (VQE) algorithm is a quantum realization of the traditional Ritz method.&lt;/p&gt;
+&lt;p&gt;A more lengthy explanation is given by &lt;a href=&#34;https://www.mustythoughts.com/variational-quantum-eigensolver-explained&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Michał Stęchły&lt;/a&gt;.
+Here I will just work out how it operates.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Ising hamiltonians are the easiest to map to quantum circuits and learning how to encode
+them will help us with more complicated hamiltonians.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;using LinearAlgebra: I, tr
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;# Computational basis
+𝟎 = [1,0]
+𝟏 = [0,1]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;X = [0 1; 1 0]
+Z = [1 0; 0 -1] # we measure in Z basis
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;H = [1 1; 1 -1]/√2
+p = H * 𝟎 # = |+⟩
+m = H * 𝟏 # = |-⟩
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;rotate-qubits-to-measure-other-pauli-matrices-than-sigma_x&#34;&gt;Rotate qubits to measure other Pauli matrices (than $\sigma_x$)&lt;/h2&gt;
+&lt;p&gt;As an example, if we measure in the Z basis its not possible to distinguish between $|+\rangle$ and
+$|-\rangle$.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@info &amp;quot;⟨+|Z|+⟩ ≈ ⟨-|Z|-⟩&amp;quot;, p&#39;*Z*p ≈ m&#39;* Z*m
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;┌ Info: (&amp;quot;⟨+|Z|+⟩ ≈ ⟨-|Z|-⟩&amp;quot;, true)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Rotating the basis in a certain way allows us to unequivocally distinguish them.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;Ry(θ) = [cos(θ/2) -sin(θ/2); sin(θ/2) cos(θ/2)]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@assert Ry(π/2)*p ≈ 𝟏
+@assert Ry(π/2)*m ≈ 𝟎
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;p_rot = Ry(-π/2)*p
+m_rot = Ry(-π/2)*m
+@info &amp;quot;⟨+|Z|Ry(-π/2)|+⟩ ≈ ⟨-|Z|Ry(-π/2)|-⟩&amp;quot;, p_rot&#39;*Z*p_rot ≈ m_rot&#39;* Z*m_rot
+@info &amp;quot;Outcome of ⟨+|Z|Ry(-π/2)|+⟩ = &amp;quot;, p_rot&#39;*Z*p_rot
+@info &amp;quot;Outcome of ⟨-|Z|Ry(-π/2)|-⟩ = &amp;quot;, m_rot&#39;* Z*m_rot
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;┌ Info: (&amp;quot;⟨+|Z|Ry(-π/2)|+⟩ ≈ ⟨-|Z|Ry(-π/2)|-⟩&amp;quot;, false)
+┌ Info: (&amp;quot;Outcome of ⟨+|Z|Ry(-π/2)|+⟩ = &amp;quot;, 0.9999999999999998)
+┌ Info: (&amp;quot;Outcome of ⟨-|Z|Ry(-π/2)|-⟩ = &amp;quot;, -0.9999999999999998)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The solution is to apply&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$R_y(−\pi/2)$      if Hamiltonian has $\hat{X}$&lt;/li&gt;
+&lt;li&gt;$R_x(\pi/2)$       if Hamiltonian has $\hat{Y}$&lt;/li&gt;
+&lt;li&gt;$I$                if Hamiltonian has $\hat{Z}$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;before measurement. Consequently, the circuit will be different for each Pauli
+matrix.&lt;/p&gt;
+&lt;h2 id=&#34;divide-the-hamiltonian-into-single-pauli-terms&#34;&gt;Divide the Hamiltonian into single Pauli terms&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;𝓗₁ = 2Z
+𝓗₂ = X
+𝓗₃ = I(2)
+𝓗 = 𝓗₁ + 𝓗₂ + 𝓗₃
+@assert 𝓗 ≈ [3 1; 1 -1]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;initial-state&#34;&gt;Initial state&lt;/h2&gt;
+&lt;p&gt;We use a parametrized initial wavefunction for reasons that will be explained
+later but you can already guess that we will do a variational search.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;# Ansatz will be Ry(θ)*𝟎
+ansatz(θ) = Ry(θ)*𝟎
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;a-circuit-for-each-term&#34;&gt;A circuit for each term&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;function vqe(θ, verbose=false)
+
+   verbose &amp;amp;&amp;amp; @info &amp;quot;θ = $(θ[1])&amp;quot;
+   # Circuit for 𝓗₁: ψ ---[ h₁ )===
+
+   ψ = ansatz(θ[1])
+
+   h₁ = 2ψ&#39; * Z * ψ
+   verbose &amp;amp;&amp;amp; @info &amp;quot;  E₁ = $h₁&amp;quot;
+
+   # Circuit for 𝓗₂: ψ ---[ Ry ]---[ h₂ )===
+
+   ψ = Ry(-π/2)*ansatz(θ[1])
+
+   h₂ = ψ&#39; * Z * ψ
+   verbose &amp;amp;&amp;amp; @info &amp;quot;  E₂ = $h₂&amp;quot;
+
+   # Circuit for 𝓗₃:
+
+   h₃ = 1
+   verbose &amp;amp;&amp;amp; @info &amp;quot;  E₃ = $h₃&amp;quot;
+
+   verbose &amp;amp;&amp;amp; @info &amp;quot;  ⟨ψ($θ[1])|𝓗|ψ($θ[1])⟩ = $(h₁ + h₂ + h₃)&amp;quot;
+   h₁ + h₂ + h₃
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For two single parameter values we have&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;vqe([0],true)
+vqe([π],true)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;┌ Info: θ = 0
+┌ Info:   E₁ = 2.0
+┌ Info:   E₂ = 2.220446049250313e-16
+┌ Info:   E₃ = 1
+┌ Info:   ⟨ψ([0][1])|𝓗|ψ([0][1])⟩ = 3.0
+┌ Info: θ = π
+┌ Info:   E₁ = -2.0
+┌ Info:   E₂ = -2.220446049250313e-16
+┌ Info:   E₃ = 1
+┌ Info:   ⟨ψ([π][1])|𝓗|ψ([π][1])⟩ = -1.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;using Optim
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;result = optimize(vqe, [0.0], BFGS())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt; * Status: success
+
+ * Candidate solution
+    Final objective value:     -1.236068e+00
+
+ * Found with
+    Algorithm:     BFGS
+
+ * Convergence measures
+    |x - x&#39;|               = 6.65e-06 ≰ 0.0e+00
+    |x - x&#39;|/|x&#39;|          = 2.48e-06 ≰ 0.0e+00
+    |f(x) - f(x&#39;)|         = 4.94e-11 ≰ 0.0e+00
+    |f(x) - f(x&#39;)|/|f(x&#39;)| = 4.00e-11 ≰ 0.0e+00
+    |g(x)|                 = 1.37e-11 ≤ 1.0e-08
+
+ * Work counters
+    Seconds run:   0  (vs limit Inf)
+    Iterations:    4
+    f(x) calls:    10
+    ∇f(x) calls:   10
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;θ_opt = Optim.minimizer(result)[1]
+energy_opt = Optim.minimum(result)
+@info &amp;quot;VQE: θ* = $θ_opt, E* = $energy_opt&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;┌ Info: VQE: θ* = -2.6779450445907376, E* = -1.2360679774997898
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;more-advanced-hamiltonians&#34;&gt;More advanced hamiltonians&lt;/h2&gt;
+&lt;p&gt;Fermionic operators can be transformed into Ising-type hamiltonians in several ways.
+The most common are the Jordan-Wigner and Bravyi-Kitaev transformations.&lt;/p&gt;
+&lt;p&gt;In this example we only had a single qubit but it can be extended
+to multiple qubits.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Quantum Teleportation Tutorial</title>
       <link>https://zyth0s.github.io/project/quantum-teleportation-tutorial/</link>
       <pubDate>Mon, 28 Dec 2020 00:13:44 +0000</pubDate>
       <guid>https://zyth0s.github.io/project/quantum-teleportation-tutorial/</guid>
-      <description>&lt;p&gt;The tutorial is &lt;a href=&#34;https://github.com/zyth0s/SciAlgs.jl/blob/master/src/QM/tutorial_quantum_computing.ipynb&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;hosted in GitHub&lt;/a&gt;.&lt;/p&gt;
+      <description>&lt;p&gt;The tutorial is also &lt;a href=&#34;https://github.com/zyth0s/SciAlgs.jl/blob/master/src/QM/tutorial_quantum_computing.ipynb&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;hosted in
+GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Have you ever heard of quantum teleportation and wondered what is it exactly?
+Until very recently I was like you.  Even if I received academic formation
+(including quantum mechanics) I never got past pure astonishment. For instance,
+once I opened a quantum information book at a public library and I was scared
+enough to not look further. On the other hand, popular explanations of the
+concept always fail to give a satisfactory description because they omit the
+only tool that helps us understand quantum mechanics: math.&lt;/p&gt;
+&lt;p&gt;My perspective changed completely when I encountered Nielsen and Matuschak&amp;rsquo;s
+&lt;a href=&#34;https://quantum.country/qcvc&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Quantum Computing for the very curious&lt;/a&gt;
+fantastic essays. I encourage you to read them also.&lt;/p&gt;
+&lt;p&gt;As you will discover, most of the calculations can be reduced to simple low
+dimensional matrix operations. It is ideal for tinkering.  Furthermore, the
+whole teleportation protocol can be condensed into a single diagram.&lt;/p&gt;
+&lt;p&gt;In this hands-out tutorial we will cover some of the same concepts with the
+help of a computer. All code below is written in Julia.  Few linear algebra
+concepts are needed. We use the identity matrix $I_m$, the adjoint operation
+$A^\dagger$, the determinant, trace, kroenecker (or tensor) product, and the
+2-norm.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;using LinearAlgebra: I, det, tr, kron, normalize!
+const ⊗ = kron
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;computational-quantum-basis&#34;&gt;Computational quantum basis&lt;/h2&gt;
+&lt;p&gt;Digital computers are able to reduce all information to zeros and ones, that
+is, a bit may be one of the set ${0, 1}$. The measurement of a single bit is
+described by a probability distribution on the space of possible bits $p:
+{0,1} \to [0,1]$. On the other hand, quantum bits belong to a two-dimensional
+complex vector space $\mathbb{C}^2$. Measurements give also a probability but
+draw from a larger space $\rho_p: \mathbb{C}^2 \to [0,1]$.&lt;/p&gt;
+&lt;p&gt;Now you might ask how to move data stored in bits to qubits. It turns out that
+you can map every classical probability distribution to a quantum probability
+distribution. The resulting distribution is called a density operator,
+$\rho_p$. If we think of each element of the bitset ${0,1}$ as a $2 \times 1$
+basis vector, both form an orthonormal basis that spans $\mathbb{C}^2$.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$|0\rangle = [1, 0]^T$ is a column vector representing the classical bit 0&lt;/li&gt;
+&lt;li&gt;$|1\rangle = [0, 1]^T$ is a column vector representing the classical bit 1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Column vectors are represented with the bar and right bracket, e.g.
+$|v\rangle$, following in Dirac notation. Those two special vectors will be
+assigned in code to unicode characters that ressemble $0$ and $1$.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;𝟎 = [1, 0] # ≡ $|0\rangle$; typeset with \bfzero
+𝟏 = [0, 1] # ≡ $|1\rangle$; typeset with \bfone
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The density operator is the $2 \times 2$ matrix with the classical
+probabilities arranged along its diagonal, the rest zeros. If we have a
+classical bit 0 (probability $p=1$ to have $|0\rangle$ and $p=0$ to have
+$|1\rangle$), then the density operator is&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;ρ𝟎 = [1 0;
+      0 0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Other way to map classical to quantum probabilities is using the outer product
+$\rho_p = \sum_i p_i |\psi_i\rangle \langle\psi_i|$&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@assert ρ𝟎 ≈ 1𝟎*𝟎&#39; + 0𝟏*𝟏&#39; # 𝟎 has p=1, and 𝟏 has p=0 probability
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The vector with left angle and bar is a row vector that is the adjoint of the
+corresponding column vector.&lt;/p&gt;
+&lt;p&gt;The same probability distribution can be arranged as a vector if we had
+chosen the tensor product instead of the outer product. Instead of a $2
+\times 2$ matrix we have a $4 \times 1$ vector. Technically, a vector space
+like $\mathbb{C}^2$ is isomorphic to $\mathbb{C} \otimes \mathbb{C}$.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@assert vec(ρ𝟎) ≈ 1𝟎 ⊗ 𝟎 + 0𝟏 ⊗ 𝟏
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;a-general-qubit&#34;&gt;A general qubit&lt;/h3&gt;
+&lt;p&gt;A general qubit $|\psi\rangle = \alpha |0\rangle + \beta |1\rangle \in
+\mathbb{C}^2$ is described as a linear combination of the basis vectors and
+it must satisfy the normalization condition $|\alpha|^2 + |\beta|^2 = 1$.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;α = 0.6
+β = 0.8
+@assert α^2 + β^2 ≈ 1 # normalization contraint (here for α, β ∈ ℝ)
+ψ = α*𝟎 + β*𝟏
+@assert ψ ≈ [α, β]
+@assert ψ&#39;*ψ ≈ 1 # ⟨ψ|ψ⟩ = 1 (normalization again)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;quantum-gates&#34;&gt;Quantum gates&lt;/h2&gt;
+&lt;p&gt;Once we have transformed our information to qubits we need to manipulate them
+to achieve our goal. Those operations are realized with gates that are
+analogous to classical circuit gates.&lt;/p&gt;
+&lt;h3 id=&#34;pauli-sigma_x-gate-x--not------x----&#34;&gt;Pauli $\sigma_x$ gate: &lt;code&gt;X == NOT == ---[ X ]---&lt;/code&gt;&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;X = [0 1; 1 0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@assert X*𝟎 ≈ 𝟏
+@assert X*𝟏 ≈ 𝟎
+# By the linearity of matrix multiplication it follows that the matrix acts the
+# same way as the X on all input states, and so they are the same operation.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@assert X*X&#39; ≈ I(2) # this is a proof of unitariness
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;X*ψ
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;2-element Array{Float64,1}:
+ 0.8
+ 0.6
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;hadamard-gate--h------h----&#34;&gt;Hadamard gate:  &lt;code&gt;H == ---[ H ]---&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;A Hadamard gate converts a classical bit into a general qubit.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;H = [1 1; 1 -1]./√2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@assert H*𝟎 ≈ [1, 1]./√2 # kinda bonding state
+@assert H*𝟏 ≈ [1,-1]./√2 # kinda antibonding state
+# By the linearity of matrix multiplication it follows that the matrix acts the
+# same way as the Hadamard on all input states, and so they are the same
+# operation.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@assert H^2 ≈ I(2) # H is idempotent
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@assert H*H&#39; ≈ I(2) # this is a proof of unitariness
+@assert abs(det(H)) ≈ 1 # conservation of particles
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Not every matrix is a gate, for instance&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;J = [1 1; 1 1]./√2
+@assert (J*J&#39; ≈ I(2)) == false
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;H X ψ == &amp;mdash;[ X ]&amp;mdash;[ H ]&amp;mdash;&lt;/p&gt;
+&lt;h3 id=&#34;measurement-----m-&#34;&gt;Measurement: &lt;code&gt;---| m )===&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;In colloquial terms, measurements can be performed by &amp;ldquo;casting the shadow&amp;rdquo; of the qubit state at a
+place where we can look, that is, our computational quantum basis.  The
+probability of $|u\rangle$ being $|0\rangle$ is $\langle u|0\rangle\langle
+0|u\rangle = |\langle 0|u\rangle|^2$ or $Tr(\rho_u |0\rangle\langle 0|)$ where
+$\rho_u$ is the density operator $|u\rangle\langle u|$.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;measure(ψ, verbose=false) = begin
+   p𝟎 = tr(ψ*ψ&#39; * 𝟎*𝟎&#39;) # ≡ ⟨ψ|0⟩⟨0|ψ⟩ resol. ident
+   p𝟏 = tr(ψ*ψ&#39; * 𝟏*𝟏&#39;) # ≡ ⟨ψ|1⟩⟨1|ψ⟩ resol. ident
+   if verbose
+      println(&amp;quot;m = 0 with probability $p𝟎&amp;quot;)
+      println(&amp;quot;m = 1 with probability $p𝟏&amp;quot;)
+   end
+   [p𝟎, p𝟏]
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;# _ψ2 ---[ H ]---[ m )===
+_ψ = rand([𝟎,𝟏])
+_ψ2 = H*_ψ # Input state is either (|0⟩ + |1⟩)/√2 or (|0⟩ - |1⟩)/√2
+H*_ψ2 |&amp;gt; measure
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;2-element Array{Float64,1}:
+ 0.0
+ 0.9999999999999996
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The state measured is the same as the initial one. That is a consequence of $H$ being
+idempotent.&lt;/p&gt;
+&lt;h3 id=&#34;pauli-sigma_y-gate--y------y----&#34;&gt;Pauli $\sigma_y$ gate:  &lt;code&gt;Y == ---[ Y ]---&lt;/code&gt;&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;Y = [0 -im; im 0]
+@assert Y*Y&#39; ≈ I(2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;pauli-sigma_z-gate-z------z----&#34;&gt;Pauli $\sigma_z$ gate: &lt;code&gt;Z == ---[ Z ]---&lt;/code&gt;&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;Z = [1 0; 0 -1]
+@assert Z*Z&#39; ≈ I(2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;general-rotation-gate&#34;&gt;General rotation gate&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;θ = π/2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;R = [cos(θ) -sin(θ); sin(θ) cos(θ)]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;2×2 Array{Float64,2}:
+ 6.12323e-17  -1.0
+ 1.0           6.12323e-17
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@assert R*R&#39; ≈ I(2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;Rx(θ) = cos(θ/2)*I(2) - im * sin(θ/2)*X
+Ry(θ) = cos(θ/2)*I(2) - im * sin(θ/2)*Y
+Rz(θ) = cos(θ/2)*I(2) - im * sin(θ/2)*Z
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;multi-qubit-states&#34;&gt;Multi-qubit states&lt;/h2&gt;
+&lt;p&gt;Here again, we can find an analogy with the classical world if we think that
+we are passing from sets to vector spaces. Whereas classical state spaces are
+combined with the cartesian product, such as ${0,1} \times {0,1}$,
+quantum state spaces are combined with the tensor product, $\mathbb{C}^2 ⊗
+\mathbb{C}^2$. The classical probability $p: {0,1} \times {0,1} \to
+[0,1]$ on the combined set is a joint probability (the probability of
+both having 0 in the first and 0 in the second bit, for example). The
+corresponding density operator is also a joint probability in their
+tensor product space $\rho_p: \mathbb{C}^2 \otimes \mathbb{C}^2 \cong
+\mathbb{C}^4 \to [0,1]$.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;𝟎𝟎 = 𝟎 ⊗ 𝟎
+𝟎𝟏 = 𝟎 ⊗ 𝟏
+𝟏𝟎 = 𝟏 ⊗ 𝟎
+𝟏𝟏 = 𝟏 ⊗ 𝟏
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;γ = 0.8
+δ = 0.6
+ϕ = γ*𝟎 + δ*𝟏
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;2-element Array{Float64,1}:
+ 0.8
+ 0.6
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;More generally, if we have single-qubit states ψ and ϕ, then the combined
+state when the two qubits are put together is just:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;ξ = ψ ⊗ ϕ
+@assert ξ ≈ [ψ[1]*ϕ[1], ψ[1]*ϕ[2], ψ[2]*ϕ[1], ψ[2]*ϕ[2]]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;multi-qubit-gates&#34;&gt;Multi-qubit gates&lt;/h2&gt;
+&lt;p&gt;Take the form  $G_1 \otimes G_2 \otimes \cdots$.&lt;/p&gt;
+&lt;h3 id=&#34;controlled-not-gate-cnot&#34;&gt;Controlled-NOT gate (CNOT)&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;  x ---⋅---
+       |
+  y ---⊕---
+  x is the control qubit
+  y is the target qubit
+  |x, y ⊕ x⟩ for short
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;CNOT = [1 0 0 0;
+        0 1 0 0;
+        0 0 0 1;
+        0 0 1 0]
+# Also
+@assert CNOT ≈ cat(I(2), X, dims=(1,2)) #|&amp;gt; Matrix
+@assert CNOT ≈ 𝟎*𝟎&#39; ⊗ I(2) + 𝟏*𝟏&#39; ⊗ X
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@assert CNOT*𝟎𝟎 ≈ 𝟎𝟎
+@assert CNOT*𝟎𝟏 ≈ 𝟎𝟏
+@assert CNOT*𝟏𝟎 ≈ 𝟏𝟏
+@assert CNOT*𝟏𝟏 ≈ 𝟏𝟎
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;# Apply H to first qubit in a 2d space
+H₁ = H ⊗ I(2)
+# Apply H to second qubit in a 2d space
+H₂ = I(2) ⊗ H
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;4×4 Array{Float64,2}:
+ 0.707107   0.707107  0.0        0.0
+ 0.707107  -0.707107  0.0        0.0
+ 0.0        0.0       0.707107   0.707107
+ 0.0        0.0       0.707107  -0.707107
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;CNOT*H₁*𝟎𝟎
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;4-element Array{Float64,1}:
+ 0.7071067811865475
+ 0.0
+ 0.0
+ 0.7071067811865475
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Beware, CNOT can change the control qubit!&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;# |+-⟩
+pm = H*𝟎 ⊗ H*𝟏
+# |--⟩
+mm = H*𝟏 ⊗ H*𝟏
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;|0⟩ ---[ H ]--- |+⟩---⋅--- |-⟩
+                      |
+|1⟩ ---[ H ]--- |-⟩---⊕--- |-⟩
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@assert CNOT*pm ≈ mm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;toffoli-gate-ccnot&#34;&gt;Toffoli gate CCNOT&lt;/h2&gt;
+&lt;p&gt;Replaces the classical AND gate&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;#CCNOT = cat(I(6), [0 1; 1 0], dims=(1,2)) |&amp;gt; Matrix
+CCNOT = cat(I(4), CNOT, dims=(1,2)) |&amp;gt; Matrix
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;8×8 Array{Int64,2}:
+ 1  0  0  0  0  0  0  0
+ 0  1  0  0  0  0  0  0
+ 0  0  1  0  0  0  0  0
+ 0  0  0  1  0  0  0  0
+ 0  0  0  0  1  0  0  0
+ 0  0  0  0  0  1  0  0
+ 0  0  0  0  0  0  0  1
+ 0  0  0  0  0  0  1  0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;global-phase-factor&#34;&gt;Global phase factor&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;θ = rand() # any real number
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;0.24805413652694797
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;G(θ) = ℯ^(im*θ) * I(2) # global phase factor ℯ^(iθ)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;if typeof(θ) &amp;lt;: Real
+   @assert G(θ)*G(θ)&#39; ≈ I(2)
+   @info &amp;quot;A matrix changing the global phase factor is unitary.&amp;quot;
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;┌ Info: A matrix changing the global phase factor is unitary.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@info &amp;quot;Changing the phase does not affect the measurement.&amp;quot;
+@assert G(rand())*𝟎 |&amp;gt; measure ≈ measure(𝟎)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;┌ Info: Changing the phase does not affect the measurement.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;other-gates&#34;&gt;Other gates&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;S = [ 1 0; 0 im]
+T = [ 1 0; 0 ℯ^(im*π/4)]
+#Y = [ 0 -im; im 0]
+#Z = [ 1 0; 0 -1]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;2×2 Array{Complex{Float64},2}:
+ 1.0+0.0im       0.0+0.0im
+ 0.0+0.0im  0.707107+0.707107im
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you were able to follow me you are ready to understand quantum teleportation.&lt;/p&gt;
+&lt;h2 id=&#34;quantum-teleportation&#34;&gt;Quantum teleportation&lt;/h2&gt;
+&lt;p&gt;Alice and Bob can share &lt;em&gt;beforehand&lt;/em&gt; a special entangled two-qubit&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;|0⟩ ---[ H ]---⋅--- 
+               |   
+               |    (|00⟩ + |11⟩)/√2
+               |
+|0⟩ -----------⊕---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;ebit = CNOT*H₁*𝟎𝟎 # entangled bit -&amp;gt; shared
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;4-element Array{Float64,1}:
+ 0.7071067811865475
+ 0.0
+ 0.0
+ 0.7071067811865475
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Alice takes the upper qubit and Bob the lower qubit.
+Then, they can separate.&lt;/p&gt;
+&lt;p&gt;That is the first stage of the protocol depicted below&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;         teleported state:  |ψ⟩  ------⋅---[ H ]---[ z )===
+                                       |
+                                       |
+                                       |
+       |0⟩ ---[ H ]---⋅----------------⊕-----------[ x )===
+                      |  |00⟩ + |11⟩
+                      | ------------
+                      |      √2
+       |0⟩ -----------⊕------------------------------------[ Xˣ ]---[ Zᶻ ]--- |ψ⟩
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It is a very succint way of condensing an otherwise unexpeced phenomenom.&lt;/p&gt;
+&lt;p&gt;Given the moment, Alice will desire to deliver Bob some important piece of information
+encoded as a qubit.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;# The state ψ Alice wants to teleport
+α = rand(Complex{Float64})
+β = sqrt(1 - α*conj(α)) # |α|² + |β|² = 1
+@assert α*conj(α) + β*conj(β) ≈ 1 &amp;quot;State not properly normalized. Try with other (α,β)&amp;quot;
+ψ = α*𝟎 + β*𝟏 # ∈ ℂ² ≝ ℂ ⊗ ℂ ; ρψ = ψ*ψ&#39; ∈ ℂ ⊗ ℂ
+_ψ = ψ # we can do this only in a classic circuit (debugging purposes)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;2-element Array{Complex{Float64},1}:
+    0.75190393025605 + 0.5381299416639849im
+ 0.38086302728175303 + 0.0im
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;She applies a conditional-NOT to the entangled qubit based on the state to be
+teleported. Thus, both are entangled. Next, applies a Hadamard matrix to the state to be teleported.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;s = ψ ⊗ ebit;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;gate1 = CNOT ⊗ I(2)
+gate2 = H ⊗ I(4);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;ψ = gate2*gate1*s;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Alice measures first two bits, posibilities are 00, 01, 10, and 11&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;P𝟎𝟎 = 𝟎𝟎*𝟎𝟎&#39; ⊗ I(2) # projections
+P𝟎𝟏 = 𝟎𝟏*𝟎𝟏&#39; ⊗ I(2)
+P𝟏𝟎 = 𝟏𝟎*𝟏𝟎&#39; ⊗ I(2)
+P𝟏𝟏 = 𝟏𝟏*𝟏𝟏&#39; ⊗ I(2);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;ρψ = ψ*ψ&#39; # density operator
+p𝟎𝟎 = tr(ρψ * P𝟎𝟎) |&amp;gt; real # probabilities
+p𝟎𝟏 = tr(ρψ * P𝟎𝟏) |&amp;gt; real
+p𝟏𝟎 = tr(ρψ * P𝟏𝟎) |&amp;gt; real
+p𝟏𝟏 = tr(ρψ * P𝟏𝟏) |&amp;gt; real;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;@info &amp;quot;  The probability of |𝟎𝟎⟩ is $p𝟎𝟎&amp;quot;
+@info &amp;quot;  The probability of |𝟎𝟏⟩ is $p𝟎𝟏&amp;quot;
+@info &amp;quot;  The probability of |𝟏𝟎⟩ is $p𝟏𝟎&amp;quot;
+@info &amp;quot;  The probability of |𝟏𝟏⟩ is $p𝟏𝟏&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;┌ Info:   The probability of |𝟎𝟎⟩ is 0.2499999999999999
+┌ Info:   The probability of |𝟎𝟏⟩ is 0.2499999999999999
+┌ Info:   The probability of |𝟏𝟎⟩ is 0.2499999999999999
+┌ Info:   The probability of |𝟏𝟏⟩ is 0.2499999999999999
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;All outcomes have the same chance of appearing.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;icollapsed = argmax([p𝟎𝟎, p𝟎𝟏, p𝟏𝟎, p𝟏𝟏])
+icollapsed = rand(1:4) # to avoid taking always the first
+Pcollapsed = [P𝟎𝟎, P𝟎𝟏, P𝟏𝟎, P𝟏𝟏][icollapsed];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;x = (icollapsed == 2 || icollapsed == 4) |&amp;gt; Int
+z = (icollapsed == 3 || icollapsed == 4) |&amp;gt; Int
+@info &amp;quot;  Alice measured x = $x and z = $z&amp;quot;
+@info &amp;quot;  Alice qubits collapsed to $([&amp;quot;|𝟎𝟎⟩&amp;quot;, &amp;quot;|𝟎𝟏⟩&amp;quot;, &amp;quot;|𝟏𝟎⟩&amp;quot;, &amp;quot;|𝟏𝟏⟩&amp;quot;][icollapsed])&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;┌ Info:   Alice measured x = 1 and z = 0
+┌ Info:   Alice qubits collapsed to |𝟎𝟏⟩
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The resulting two classical bits are shared to Bob, who uses them to process
+his entangled bit.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;range = 2icollapsed-1:2icollapsed
+ψ = normalize!(Pcollapsed*ψ)[range] # state after measurement of 𝟎𝟎
+ψ = Z^z * X^x * ψ # Bob uses Alice classical bits x and z
+@assert _ψ ≈ ψ &amp;quot;Teleported state has been corrupted&amp;quot;
+@info &amp;quot;  Teleported |ψ⟩ = ($(ψ[1])) |𝟎⟩ + ($(ψ[2])) |𝟏⟩ !!&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;┌ Info:   Teleported |ψ⟩ = (0.75190393025605 + 0.5381299416639849im) |𝟎⟩ + (0.3808630272817531 + 0.0im) |𝟏⟩ !!
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is awesome! We have teleported a vast amount information just moving two
+bits. It is like seeing a sportsman pulling a truck with his beard!&lt;/p&gt;
 </description>
     </item>
     
