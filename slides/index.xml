@@ -5,14 +5,15 @@
     <link>https://zyth0s.github.io/slides/</link>
       <atom:link href="https://zyth0s.github.io/slides/index.xml" rel="self" type="application/rss+xml" />
     <description>Slides</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 05 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 03 Jan 2020 00:00:00 +0000</lastBuildDate>
     <item>
-      <title>Slides</title>
+      <title>ChemInt.jl An extensible framework for high-performance bonding analysis in Julia</title>
       <link>https://zyth0s.github.io/slides/example/</link>
-      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 03 Jan 2020 00:00:00 +0000</pubDate>
       <guid>https://zyth0s.github.io/slides/example/</guid>
-      <description>&lt;h1 id=&#34;create-slides-in-markdown-with-wowchemy&#34;&gt;Create slides in Markdown with Wowchemy&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&#34;https://wowchemy.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wowchemy&lt;/a&gt; | &lt;a href=&#34;https://owchemy.com/docs/managing-content/#create-slides&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Documentation&lt;/a&gt;&lt;/p&gt;
+      <description>&lt;h1 id=&#34;chemintjl&#34;&gt;ChemInt.jl&lt;/h1&gt;
+&lt;p&gt;Daniel Menéndez Crespo&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://cpfs.mpg.de&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MPI CPFS&lt;/a&gt; | &lt;a href=&#34;https://owchemy.com/docs/managing-content/#create-slides&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Documentation&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;features&#34;&gt;Features&lt;/h2&gt;
 &lt;ul&gt;
@@ -36,7 +37,7 @@
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;code-highlighting&#34;&gt;Code Highlighting&lt;/h2&gt;
-&lt;p&gt;Inline code: &lt;code&gt;variable&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Read a wavefunction with &lt;code&gt;parse_wavefunction&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Code block:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;porridge = &amp;quot;blueberry&amp;quot;
 if porridge == &amp;quot;blueberry&amp;quot;:

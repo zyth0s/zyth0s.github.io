@@ -18,7 +18,7 @@
       <pubDate>Tue, 29 Dec 2020 09:54:08 +0000</pubDate>
       <guid>https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/</guid>
       <description>&lt;p&gt;Jupyter notebook &lt;a href=&#34;https://github.com/zyth0s/SciAlgs.jl/blob/master/src/QM/tutorial_quantum_computing_2.ipynb&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Variational Quantum Eigensolver (VQE) algorithm is a quantum realization of the traditional Ritz method.&lt;/p&gt;
+&lt;p&gt;Variational Quantum Eigensolver (VQE) algorithm is a quantum realization of Ritz&amp;rsquo;s variational method.&lt;/p&gt;
 &lt;p&gt;A more lengthy explanation is given by &lt;a href=&#34;https://www.mustythoughts.com/variational-quantum-eigensolver-explained&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Michał Stęchły&lt;/a&gt;.
 Here I will just work out how it operates.&lt;/p&gt;
 &lt;blockquote&gt;

@@ -34,8 +34,8 @@
   
     
   
-  <meta name="description" content="The tutorial is hosted in GitHub.
-The tight binding method expands orbitals as a linear combination of atomic orbitals (LCAO) - in the strict sense. AOs are not replaced by a fitted basis set.">
+  <meta name="description" content="The tutorial is also hosted in GitHub.
+Table of Contents  Two site chain     Three site chain Three site ring     Large homoatomic ring     A generic tight binding procedure Large chain     Discrete chain     Two sites per cell with $s$ orbitals     Two sites per cell with $s$ and $p$ orbitals Two dimensional lattice   Tight binding is a method that expands orbitals as a linear combination of atomic orbitals, like the method with the corresponding acronym, LCAO.">
 
   
   <link rel="alternate" hreflang="en-us" href="https://zyth0s.github.io/project/tight-binding-tutorial/">
@@ -282,8 +282,8 @@ The tight binding method expands orbitals as a linear combination of atomic orbi
   <meta property="og:site_name" content="Daniel Menéndez Crespo">
   <meta property="og:url" content="https://zyth0s.github.io/project/tight-binding-tutorial/">
   <meta property="og:title" content="Tight binding tutorial | Daniel Menéndez Crespo">
-  <meta property="og:description" content="The tutorial is hosted in GitHub.
-The tight binding method expands orbitals as a linear combination of atomic orbitals (LCAO) - in the strict sense. AOs are not replaced by a fitted basis set."><meta property="og:image" content="https://zyth0s.github.io/project/tight-binding-tutorial/featured.png">
+  <meta property="og:description" content="The tutorial is also hosted in GitHub.
+Table of Contents  Two site chain     Three site chain Three site ring     Large homoatomic ring     A generic tight binding procedure Large chain     Discrete chain     Two sites per cell with $s$ orbitals     Two sites per cell with $s$ and $p$ orbitals Two dimensional lattice   Tight binding is a method that expands orbitals as a linear combination of atomic orbitals, like the method with the corresponding acronym, LCAO."><meta property="og:image" content="https://zyth0s.github.io/project/tight-binding-tutorial/featured.png">
   <meta property="twitter:image" content="https://zyth0s.github.io/project/tight-binding-tutorial/featured.png"><meta property="og:locale" content="en-us">
   
     
@@ -335,7 +335,7 @@ The tight binding method expands orbitals as a linear combination of atomic orbi
       "url": "https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "The tutorial is hosted in GitHub.\nThe tight binding method expands orbitals as a linear combination of atomic orbitals (LCAO) - in the strict sense. AOs are not replaced by a fitted basis set."
+  "description": "The tutorial is also hosted in GitHub.\nTable of Contents  Two site chain     Three site chain Three site ring     Large homoatomic ring     A generic tight binding procedure Large chain     Discrete chain     Two sites per cell with $s$ orbitals     Two sites per cell with $s$ and $p$ orbitals Two dimensional lattice   Tight binding is a method that expands orbitals as a linear combination of atomic orbitals, like the method with the corresponding acronym, LCAO."
 }
 </script>
 
@@ -866,13 +866,66 @@ The tight binding method expands orbitals as a linear combination of atomic orbi
   <div class="article-container">
 
     <div class="article-style">
-      <p>The tutorial is <a href="https://github.com/zyth0s/SciAlgs.jl/blob/master/src/QM/tutorial_tight_binding.ipynb" target="_blank" rel="noopener">hosted in GitHub</a>.</p>
-<p>The tight binding method expands orbitals as a linear combination of atomic orbitals
-(LCAO) - in the strict sense. AOs are not replaced by a fitted basis set.
-The set of AOs is often minimal and the set of MOs/COs is reduced to a subset
-around the chemical potential, e.g. only π orbitals in a polymer chain.
-Frequently, only interactions with the first coordination shells are included.
-Under some asumptions it is equivalent to Hückel&rsquo;s method.</p>
+      <p>The tutorial is also <a href="https://github.com/zyth0s/SciAlgs.jl/blob/master/src/QM/tutorial_tight_binding.ipynb" target="_blank" rel="noopener">hosted in GitHub</a>.</p>
+<h2>Table of Contents</h2>
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#two-site-chain">Two site chain</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#three-site-chain">Three site chain</a></li>
+    <li><a href="#three-site-ring">Three site ring</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#large-homoatomic-ring">Large homoatomic ring</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#a-generic-tight-binding-procedure">A generic tight binding procedure</a></li>
+    <li><a href="#large-chain">Large chain</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#discrete-chain">Discrete chain</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#two-sites-per-cell-with-s-orbitals">Two sites per cell with $s$ orbitals</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#two-sites-per-cell-with-s-and-p-orbitals">Two sites per cell with $s$ and $p$ orbitals</a></li>
+    <li><a href="#two-dimensional-lattice">Two dimensional lattice</a></li>
+  </ul>
+</nav>
+<p>Tight binding is a method that expands orbitals as a linear combination of
+atomic orbitals, like the method with the corresponding acronym, LCAO.
+Sometimes they are refered as being the same, but let me note some differences
+between them. First, LCAO often encompasses large expansions to achieve
+chemical accuracy. Tight-binding, however, is more commonly used with a minimal
+basis. Another difference is the reduction to an active orbital space.  The set
+of orbitals is reduced in tight binding to a subset around the chemical
+potential, e.g. only π orbitals in a polymer chain.  In that sense, it is more
+similar to Hückel&rsquo;s method.  Also, frequently, only interactions with the first
+coordination shells are included.  And finally, electron-electron interactions
+are commonly neglected in tight-binding.  These differences stem from being two
+similar methods used by different communities with different purposes.
+Tight-binding is often a model to approximate the electronic structure of large
+solid state systems, and LCAO is a good first approximation to accurately
+approximate the electronic structure of small molecular systems. The chemist
+tries to predict mainly reactions for whose accurate predictions are needed
+whereas the physicist tries to explain features of materials in a search for
+new physics laws.</p>
+<p>Most of the material of this article is inspired by a curse given by Prof.
+Tjeng Hao during 2020 pandemic lockdown.</p>
 <p>We load linear algebra and plotting libraries first.</p>
 <pre><code class="language-julia">using Pkg; Pkg.add(&quot;Measures&quot;)
 Pkg.add(&quot;Parameters&quot;)
@@ -889,22 +942,33 @@ pyplt.matplotlib.style.use(&quot;sci&quot;)
 mpl.use(backend=&quot;Qt5Agg&quot;)
 </code></pre>
 <p>To plot the density of states we need to broaden/smear the spectral lines.
-The line shape observed is broadened by Doppler, &hellip;</p>
+Note that the line shape observed experimentally is broadened by the Doppler effect among other
+phenomena.</p>
 <pre><code class="language-julia">include(&quot;dos_broadening.jl&quot;)
 </code></pre>
-<p>In this tutorial we will neglect all electron-electron interactions, focusing
-only in kinetic electron energy and electron-external potential.
-We talk about sites rather than atoms because we neglect spatial dimension.</p>
+<p>In this tutorial we will neglect electron-electron interactions, focusing only
+on kinetic electron energy and electron-external potential.  <em>Sites</em> refers to
+atoms in a lattice. Besides, we sometimes name sites rather than atomic
+orbitals because we think of (atomic) orbitals as being very localized around a
+site.  This also helps distinguishing atomic from molecular/crystal orbitals,
+becoming simply sites and orbitals/states, respectively. Note that atomic orbitals are just
+used to contruct true eigenstates of the hamiltonian considered but the earlier
+are no proper states. They are used because functions with similar shape to
+eigenfunctions of the Hydrogen atom hamiltonian are a good first approximation
+to eigenfunctions of other hamiltonians.</p>
 <hr>
-<h2 id="chain-of-2-sites">Chain of 2 sites</h2>
-<p>A chain of 2 sites, one with reference energy 0, and the other Δ higher
+<h2 id="two-site-chain">Two site chain</h2>
+<pre><code class="language-mermaid">graph LR;
+  1((1))---2((2));
+</code></pre>
+<p>A chain of two sites, one site with reference energy $0$ and the other $\Delta$ higher,
 has a simple tight binding hamiltonian</p>
 <pre><code class="language-julia">function buildH2(Δ,t)
   # He⁺
   [ 0 t; t Δ]
 end
 </code></pre>
-<p>where t is the hopping parameter.</p>
+<p>where $t$ is the hopping parameter.</p>
 <pre><code class="language-julia"># Two atomic orbitals at sites 1 and 2
 t = 0; Δ = 2
 println(&quot;A.1.  t = $t, Δ = $Δ&quot;)
@@ -945,9 +1009,12 @@ Eigenstate with E = -0.09901951359278481 and vector [-0.9951333266680701, 0.0985
 Eigenstate with E = 10.099019513592786 and vector [0.09853761796664214, 0.9951333266680701]
 </code></pre>
 <hr>
-<h2 id="three-sites">Three sites</h2>
-<p>Three sites (with open boundary) and site energies 0, Δ1, Δ2,
-hoping constants t</p>
+<h2 id="three-site-chain">Three site chain</h2>
+<pre><code class="language-mermaid">graph LR;
+  1((1))---2((2))---3((3));
+</code></pre>
+<p>Three sites (with open boundary) and site energies $0$, $\Delta_1$, $\Delta_2$,
+hoping constants $t$</p>
 <pre><code class="language-julia">function buildHchain3(Δ1,Δ2,t12,t23)
   [  0 t12   0;
    t12  Δ1 t23;
@@ -955,7 +1022,7 @@ hoping constants t</p>
 end
 </code></pre>
 <hr>
-<h2 id="3-site-ring">3 site ring</h2>
+<h2 id="three-site-ring">Three site ring</h2>
 <p>If the sites are forming a ring (periodic boundary conditions)
 there are hoping matrix elements at the lower-left and upper-right
 corners. The hamiltonian matrix is circulant rather than Toeplitz-like.</p>
@@ -988,7 +1055,10 @@ Eigenstate with E = 6.102940861549199 and vector [0.2797289194129681, 0.35813444
   H
 end
 </code></pre>
-<h4 id="example">Example</h4>
+<h4 id="example-without-impurity">Example: without impurity</h4>
+<pre><code class="language-mermaid">graph LR;
+  1((1))---2((2))---3((3))---4((4))---5((...))---6((1))---7((...));
+</code></pre>
 <pre><code class="language-julia">t = 2.5; N = 1001
 println(&quot;C.1. Ring with $N sites and t = $t&quot;)
 H = buildHring(t,N)
@@ -1007,8 +1077,11 @@ l = @layout [ a b]
 plot(band,dos,layout=l)
 savefig(&quot;../figures/C.1_bandos_ring_t=$(t)_N=$(N)_E0=0.pdf&quot;)
 </code></pre>
-<hr>
-<h2 id="large-ring-with-an-impurity">Large ring with an impurity</h2>
+<h4 id="example-with-an-impurity">Example: with an impurity</h4>
+<pre><code class="language-mermaid">graph LR;
+  1((1))---2((2))---3((3))---4((4))---5((...))---6((1))---7((...));
+  style 3 fill:#bbf,stroke:#f66,stroke-width:1px,color:#fff
+</code></pre>
 <pre><code class="language-julia"># If the ring has an impurity in the middle
 function buildHring_impurity(t,Δ,N=1001)
   H = SymTridiagonal(zeros(N),t*ones(N-1))
@@ -1044,7 +1117,7 @@ Impurity state with E = -5.385164807134497
 </code></pre>
 <p><img src="./tutorial_tight_binding_34_0.svg" alt="svg"></p>
 <hr>
-<h2 id="generic-tight-binding-procedure">Generic tight binding procedure</h2>
+<h2 id="a-generic-tight-binding-procedure">A generic tight binding procedure</h2>
 <p>Generic function to solve tight-binding
 hamiltonian, and plot bands, DOS, and PDOS.</p>
 <pre><code class="language-julia">function tight_binding(hamiltonianConstructor::Function,params,name)
@@ -1085,7 +1158,7 @@ hamiltonian, and plot bands, DOS, and PDOS.</p>
 end
 </code></pre>
 <hr>
-<h1 id="large-chain-with-an-impurity-state">Large chain with an impurity state</h1>
+<h2 id="large-chain">Large chain</h2>
 <p>A long chain considering only nearest-neighbors
 hopings, all equal, with the possibility of having
 an impurity in the middle</p>
@@ -1105,6 +1178,9 @@ end
 </code></pre>
 <p>We will explore Schokley/Tamm surface states</p>
 <h4 id="example-d1-chain-without-impurity">Example D.1: Chain without impurity</h4>
+<pre><code class="language-mermaid">graph LR;
+  1((1))---2((2))---3((3))---4((4))---5((...))---6((N));
+</code></pre>
 <pre><code class="language-julia">name = &quot;D.1. Chain&quot;
 params = (t=2.5,N=1001,Δ=missing,impuritysite=missing)
 tight_binding(buildHchain,params,name)
@@ -1114,6 +1190,10 @@ Lowest energy state with E = -4.999975424409872
 </code></pre>
 <p><img src="./tutorial_tight_binding_43_1.svg" alt="svg"></p>
 <h4 id="example-d2-impurity-in-the-middle">Example D.2: Impurity in the middle</h4>
+<pre><code class="language-mermaid">graph LR;
+  1((1))---2((...))---3((N/2-1))---4((N/2))---5((N/2+1))---6((...))---7((N));
+  style 4 fill:#bbf,stroke:#f66,stroke-width:1px,color:#fff
+</code></pre>
 <pre><code class="language-julia">name = &quot;D.2. Chain&quot;
 params = (t=2.5,N=1001,Δ=-2,impuritysite=500)
 tight_binding(buildHchain,params,name)
@@ -1123,6 +1203,10 @@ Lowest energy state with E = -5.385164807134504 (surface state)
 </code></pre>
 <p><img src="./tutorial_tight_binding_45_1.svg" alt="svg"></p>
 <h4 id="example-d3-impurity-at-the-surface">Example D.3: Impurity at the surface</h4>
+<pre><code class="language-mermaid">graph LR;
+  1((1))---2((...))---3((N/2-1))---4((N/2))---5((N/2+1))---6((...))---7((N));
+  style 1 fill:#bbf,stroke:#f66,stroke-width:1px,color:#fff
+</code></pre>
 <pre><code class="language-julia">name = &quot;D.3. Chain&quot;
 params = (t=2.5,N=1001,Δ=-2,impuritysite=1)
 tight_binding(buildHchain,params,name)
@@ -1132,6 +1216,10 @@ Lowest energy state with E = -4.99997561943913
 </code></pre>
 <p><img src="./tutorial_tight_binding_47_1.svg" alt="svg"></p>
 <h4 id="example-d4-impurity-at-the-surface-strong-impurity">Example D.4: Impurity at the surface, strong impurity</h4>
+<pre><code class="language-mermaid">graph LR;
+  1((1))---2((...))---3((N/2-1))---4((N/2))---5((N/2+1))---6((...))---7((N));
+  style 1 fill:#bbf,stroke:#f66,stroke-width:1px,color:#fff
+</code></pre>
 <pre><code class="language-julia">name = &quot;D.4. Chain&quot;
 params = (t=2.5,N=1001,Δ=-4,impuritysite=1)
 tight_binding(buildHchain,params,name)
@@ -1141,7 +1229,12 @@ Lowest energy state with E = -5.562499999999997 (surface state)
 </code></pre>
 <p><img src="./tutorial_tight_binding_49_1.svg" alt="svg"></p>
 <p>Finite effects are also interesting</p>
-<h4 id="example-e1-finite-chain">Example E.1: Finite chain</h4>
+<h2 id="discrete-chain">Discrete chain</h2>
+<pre><code class="language-mermaid">graph LR;
+  1((1))---2((2))---3((3))---4((4))---5((5))---6((...))---9((9));
+  style 1 fill:#bbf,stroke:#f66,stroke-width:1px,color:#fff
+</code></pre>
+<h4 id="example-e1-weak-impurity">Example E.1: Weak impurity</h4>
 <pre><code class="language-julia">name = &quot;E.1. Finite Chain&quot;
 params = (t=2.5,N=9,Δ=-2,impuritysite=1)
 tight_binding(buildHchain,params,name)
@@ -1150,7 +1243,7 @@ tight_binding(buildHchain,params,name)
 Lowest energy state with E = -4.853039707148026
 </code></pre>
 <p><img src="./tutorial_tight_binding_52_1.svg" alt="svg"></p>
-<h4 id="example-e2-finite-chain">Example E.2: Finite chain</h4>
+<h4 id="example-e2-strong-impurity">Example E.2: Strong impurity</h4>
 <pre><code class="language-julia">name = &quot;E.2. Finite Chain&quot;
 params = (t=2.5,N=9,Δ=-4,impuritysite=1)
 tight_binding(buildHchain,params,name)
@@ -1160,7 +1253,7 @@ Lowest energy state with E = -5.562184783729448 (surface state)
 </code></pre>
 <p><img src="./tutorial_tight_binding_54_1.svg" alt="svg"></p>
 <hr>
-<h2 id="2-sites-per-cell-with-s-orbitals">2 sites per cell with s orbitals</h2>
+<h2 id="two-sites-per-cell-with-s-orbitals">Two sites per cell with $s$ orbitals</h2>
 <pre><code class="language-julia">function tight_binding_1D_2sites(a,Δ₁₂,t)
    # 1D chain/ring with 2 sites per unit cell, s orbitals
    b = 2a # unit cell with two sites
@@ -1185,12 +1278,12 @@ Lowest energy state with E = -5.562184783729448 (surface state)
    #savefig(&quot;../figures/1d_2sites.pdf&quot;)
 end
 </code></pre>
-<h4 id="example-3">Example</h4>
+<h4 id="example">Example</h4>
 <pre><code class="language-julia">tight_binding_1D_2sites(1,2,2) # a, Δ₁₂, t
 </code></pre>
 <p><img src="./tutorial_tight_binding_58_0.svg" alt="svg"></p>
 <hr>
-<h2 id="2-sites-per-cell-with-s-and-p-orbitals">2 sites per cell with s and p orbitals</h2>
+<h2 id="two-sites-per-cell-with-s-and-p-orbitals">Two sites per cell with $s$ and $p$ orbitals</h2>
 <pre><code class="language-julia">function tight_binding_1D_2sites_sp_orbs(a,Δ₁₂,t)
    # 1D chain/ring with 2 sites per unit cell, sp orbitals
    # Redefined ψpk = i 1/√N * ∑R₂ exp(ikR₂) ϕp(r-R₂) to have a real matrix
@@ -1220,7 +1313,7 @@ end
 </code></pre>
 <p><img src="./tutorial_tight_binding_61_0.svg" alt="svg"></p>
 <hr>
-<h2 id="2d">2D</h2>
+<h2 id="two-dimensional-lattice">Two dimensional lattice</h2>
 <pre><code class="language-julia">function tight_binding_2D(a,b,Δ₁₂,ta,tb)
    # 2D rectangular lattice with 1 site per unit cell, s orbitals
    @assert a == b # does not handle rectangular with analytic formula
@@ -1629,6 +1722,8 @@ end
       <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
 
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.8.0/mermaid.min.js" integrity="sha512-ja+hSBi4JDtjSqc4LTBsSwuBT3tdZ3oKYKd07lTVYmCnTCor56AnRql00ssqnTOR9Ss4gOP/ROGB3SfcJnZkeg==" crossorigin="anonymous" title="mermaid"></script>
       
 
       
