@@ -7,132 +7,250 @@
     <description>Slides</description>
     <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 03 Jan 2020 00:00:00 +0000</lastBuildDate>
     <item>
-      <title>ChemInt.jl An extensible framework for high-performance bonding analysis in Julia</title>
+      <title>Energetic bonding analysis with ChemInt</title>
       <link>https://zyth0s.github.io/slides/example/</link>
       <pubDate>Fri, 03 Jan 2020 00:00:00 +0000</pubDate>
       <guid>https://zyth0s.github.io/slides/example/</guid>
-      <description>&lt;h1 id=&#34;chemintjl&#34;&gt;ChemInt.jl&lt;/h1&gt;
+      <description>&lt;h2 id=&#34;energetic-bonding-analysis-with-chemint&#34;&gt;Energetic bonding analysis with ChemInt&lt;/h2&gt;
 &lt;p&gt;Daniel Menéndez Crespo&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://cpfs.mpg.de&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MPI CPFS&lt;/a&gt; | &lt;a href=&#34;https://owchemy.com/docs/managing-content/#create-slides&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Documentation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://cpfs.mpg.de&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MPI CPFS&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;features&#34;&gt;Features&lt;/h2&gt;
+&lt;h3 id=&#34;outline&#34;&gt;Outline&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;Efficiently write slides in Markdown&lt;/li&gt;
-&lt;li&gt;3-in-1: Create, Present, and Publish your slides&lt;/li&gt;
-&lt;li&gt;Supports speaker notes&lt;/li&gt;
-&lt;li&gt;Mobile friendly slides&lt;/li&gt;
+&lt;li&gt;Features&lt;/li&gt;
+&lt;li&gt;Basic usage&lt;/li&gt;
+&lt;li&gt;Import DGrid surfaces&lt;/li&gt;
+&lt;li&gt;Testing &amp;amp; Documentation&lt;/li&gt;
+&lt;li&gt;Prototype embedding in DGrid&lt;/li&gt;
+&lt;li&gt;Draft paper.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;controls&#34;&gt;Controls&lt;/h2&gt;
+&lt;h3 id=&#34;features&#34;&gt;Features&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;Next: &lt;code&gt;Right Arrow&lt;/code&gt; or &lt;code&gt;Space&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Previous: &lt;code&gt;Left Arrow&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Start: &lt;code&gt;Home&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Finish: &lt;code&gt;End&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Overview: &lt;code&gt;Esc&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Speaker notes: &lt;code&gt;S&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Fullscreen: &lt;code&gt;F&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Zoom: &lt;code&gt;Alt + Click&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/hakimel/reveal.js#pdf-export&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PDF Export&lt;/a&gt;: &lt;code&gt;E&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;For molecular and periodic systems.&lt;/li&gt;
+&lt;li&gt;Works with DGrid, Gamess, and PySCF wavefunction formats&lt;/li&gt;
+&lt;li&gt;HF and DFT wavefunctions&lt;/li&gt;
+&lt;li&gt;Parallel execution&lt;/li&gt;
+&lt;li&gt;Exhaustive documentation&lt;/li&gt;
+&lt;li&gt;ca. 39000 tests; 80% coverage&lt;/li&gt;
+&lt;li&gt;Interactive&lt;/li&gt;
+&lt;li&gt;Julia and C++ versions (both interface DGrid)&lt;/li&gt;
+&lt;li&gt;&amp;hellip;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;code-highlighting&#34;&gt;Code Highlighting&lt;/h2&gt;
-&lt;p&gt;Read a wavefunction with &lt;code&gt;parse_wavefunction&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Code block:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;porridge = &amp;quot;blueberry&amp;quot;
-if porridge == &amp;quot;blueberry&amp;quot;:
-    print(&amp;quot;Eating...&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;math&#34;&gt;Math&lt;/h2&gt;
-&lt;p&gt;In-line math: $x + y = z$&lt;/p&gt;
-&lt;p&gt;Block math:&lt;/p&gt;
-&lt;p&gt;$$
-f\left( x \right) = ;\frac{{2\left( {x + 4} \right)\left( {x - 4} \right)}}{{\left( {x + 4} \right)\left( {x + 1} \right)}}
-$$&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;fragments&#34;&gt;Fragments&lt;/h2&gt;
-&lt;p&gt;Make content appear incrementally&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{{% fragment %}} One {{% /fragment %}}
-{{% fragment %}} **Two** {{% /fragment %}}
-{{% fragment %}} Three {{% /fragment %}}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Press &lt;code&gt;Space&lt;/code&gt; to play!&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;fragment &#34; &gt;
-One
-&lt;/span&gt;
-&lt;span class=&#34;fragment &#34; &gt;
-&lt;strong&gt;Two&lt;/strong&gt;
-&lt;/span&gt;
-&lt;span class=&#34;fragment &#34; &gt;
-Three
-&lt;/span&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;A fragment can accept two optional parameters:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;class&lt;/code&gt;: use a custom style (requires definition in custom CSS)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;weight&lt;/code&gt;: sets the order in which a fragment appears&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;speaker-notes&#34;&gt;Speaker Notes&lt;/h2&gt;
-&lt;p&gt;Add speaker notes to your presentation&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-markdown&#34;&gt;{{% speaker_note %}}
-- Only the speaker can read these notes
-- Press `S` key to view
-{{% /speaker_note %}}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Press the &lt;code&gt;S&lt;/code&gt; key to view the speaker notes!&lt;/p&gt;
-&lt;aside class=&#34;notes&#34;&gt;
-  &lt;ul&gt;
-&lt;li&gt;Only the speaker can read these notes&lt;/li&gt;
-&lt;li&gt;Press &lt;code&gt;S&lt;/code&gt; key to view&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id=&#34;load-a-wavefunction&#34;&gt;Load a wavefunction&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; using ChemInt
+julia&amp;gt; wfn = parse_wavefunction(&amp;quot;examples/Al_fcc.fhi&amp;quot;)
+[ Info: 📍System:
+[ Info:   Number of atoms 1
+[ Info:   Total charge 13.0
+[ Info:   Atom Coordinates (Bohr)
+[ Info:   Nuclei 1 with Z = 13.0, position : [0.0, 0.0, 0.0]
+[ Info: 📍Wavefunction:
+[ Info:   Type: ChemInt.DGRIDWFN_Sol_Real
+[ Info:   Input file examples/Al_fcc_1x1x1/Al_fcc.fhi
+[ Info:   Checksum: 2dac66869215084036016f586bc8f45c389c39d54b71a0b1e5f094d76ade959d
+[ Info:   DGrid v5.1.0 JLL wrapper compiled with AppleClang 11.0.3.11030032 (Darwin)
+[ Info:   Number of molecular orbitals 9
+[ Info:   Number of occupied molecular orbitals 9
+[ Info:   Number of molecular primitives 18
 
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;themes&#34;&gt;Themes&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;black: Black background, white text, blue links (default)&lt;/li&gt;
-&lt;li&gt;white: White background, black text, blue links&lt;/li&gt;
-&lt;li&gt;league: Gray background, white text, blue links&lt;/li&gt;
-&lt;li&gt;beige: Beige background, dark text, brown links&lt;/li&gt;
-&lt;li&gt;sky: Blue background, thin dark text, blue links&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;ul&gt;
-&lt;li&gt;night: Black background, thick white text, orange links&lt;/li&gt;
-&lt;li&gt;serif: Cappuccino background, gray text, brown links&lt;/li&gt;
-&lt;li&gt;simple: White background, black text, blue links&lt;/li&gt;
-&lt;li&gt;solarized: Cream-colored background, dark green text, blue links&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-
-&lt;section data-noprocess data-shortcode-slide
-  
-      
-      data-background-image=&#34;/media/boards.jpg&#34;
-  &gt;
-
-&lt;h2 id=&#34;custom-slide&#34;&gt;Custom Slide&lt;/h2&gt;
-&lt;p&gt;Customize the slide style and background&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-markdown&#34;&gt;{{&amp;lt; slide background-image=&amp;quot;/media/boards.jpg&amp;quot; &amp;gt;}}
-{{&amp;lt; slide background-color=&amp;quot;#0000FF&amp;quot; &amp;gt;}}
-{{&amp;lt; slide class=&amp;quot;my-style&amp;quot; &amp;gt;}}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;custom-css-example&#34;&gt;Custom CSS Example&lt;/h2&gt;
-&lt;p&gt;Let&amp;rsquo;s make headers navy colored.&lt;/p&gt;
-&lt;p&gt;Create &lt;code&gt;assets/css/reveal_custom.css&lt;/code&gt; with:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;.reveal section h1,
-.reveal section h2,
-.reveal section h3 {
-  color: navy;
-}
+&lt;h3 id=&#34;default-configuration&#34;&gt;Default configuration&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; surfopts = parse_config(wfn)[1]
+[ Info: Reproduce the input file used for the calculation:
+[ Info: --------------------------------------------------
+...
+[ Info: --------------------------------------------------
+[ Info: 📍Surface options:
+[ Info:   Surfaces to be determined: [1]
+[ Info:   ODE solver is BS3()
+[ Info:   ODE reltol is 0.01
+[ Info:   ODE abstol is 0.0001
+[ Info:   Limits of search: [10.0]
+[ Info:   № of rays is [5810]
+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;questions&#34;&gt;Questions?&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/wowchemy/wowchemy-hugo-modules/discussions&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Ask&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://wowchemy.com/docs/managing-content/#create-slides&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Documentation&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;string-configuration&#34;&gt;String configuration&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;iqaconfig = &amp;quot;&amp;quot;&amp;quot;
+[surface]
+
+[angular_quadrature]
+  quality = &amp;quot;fine&amp;quot; # coarse | medium | fine | finest
+
+[radial_quadrature]
+  quality = &amp;quot;coarse&amp;quot; # coarse | medium | fine | finest
+
+[beta_sphere]
+  betasphere   = true
+  betafac_atom = [[1,2],[0.5,0.5]]
+...
+&amp;quot;&amp;quot;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;prepare-iqa-calculation&#34;&gt;Prepare IQA calculation&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;name = joinpath(@__DIR__, &amp;quot;lih.wfn&amp;quot;)
+
+surfile = name * &amp;quot;.surf.h5&amp;quot;
+
+wfn = parse_wavefunction(name)
+display(wfn)
+
+surfopts, quadopts, xpolaropts, iqaopts,
+          dftopts, locopts = parse_config(wfn, iqaconfig)
+
+ChemInt.adjust_beta_sphere!(quadopts, surfile, wfn)
+display(quadopts)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;find-basin-boundaries&#34;&gt;Find basin boundaries&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; find_surfaces(surfopts, wfn)
+
+[ Info: Surfaces to be determined: [1]
+[ Info: Basin    1: 
+[ Info:    Trust sphere radius       = 2.2000000000000006
+[ Info:    Suggested β-sphere radius = 1.4000000000000001
+[ Info: Basin    1: 
+Surface of basin    1: 100%[=========================] Time: 0:01:03
+[ Info:    Closest  surface point minᵣ(||r - Rnuc||) = 2.40
+[ Info:    Farthest surface point maxᵣ(||r - Rnuc||) = 10.0
+...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;run-iqa&#34;&gt;Run IQA&lt;/h3&gt;
+&lt;p&gt;Integrate IQA energy components, LIs, and DIs.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; iqa = iqa_decomposition(surfile, wfn,
+                      quadopts, xpolaropts, iqaopts, dftopts)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;iqa-summary&#34;&gt;IQA summary&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;julia&amp;gt; iqa.monos[1]
+📍Intra components of basin: 1
+  ─────────────────────────────────────────────
+  kinetic           energy   =      +7.36046127
+  self nuc-el       energy   =     -16.39957368
+  energy elec(  1)-nuc(  2)  =      -0.69443763
+  Coulomb           energy   =      +3.46606343
+  xc                energy   =      -1.66088134
+  x                 energy   =      -1.66088134
+   c                energy   =      +0.00000000
+  xc (DFT)          energy   =      +0.00000000
+  x  (DFT)          energy   =      +0.00000000
+   c (DFT)          energy   =      +0.00000000
+  Total ee repusion energy   =      +1.80518210
+  Localization index (xc)    =      +1.99249773
+  Localization index (x )    =      +1.99249773
+  Localization index ( c)    =      +0.00000000
+  Self-energy                =      -7.23393032
+  Laplacian                  =      +0.00000000
+  Nº electrons               =      +2.09697706
+  Basin charge               =      +0.90302294
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;iqa-summary-1&#34;&gt;IQA summary&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;julia&amp;gt; iqa.pairs[1]
+📍Bicentric analysis of pair 1 2
+  ─────────────────────────────────────────────────────────────────────────────────────────
+                                              exact       multipolar             diff
+  ─────────────────────────────────────────────────────────────────────────────────────────
+  Distance (a₀)                         +3.02173254
+  Total interaction                     -0.28058656      +0.64689317      -0.92747973
+  NN total repulsion                    +0.99280792
+  energy elec(  1)-nuc(  2)             -1.80846292      -0.32421556      -1.48424736
+  energy elec(  2)-nuc(  1)             -0.69443763      -0.15707837      -0.53735927
+  EE total repulsion                    +1.22950607      +0.13537917      +1.09412690
+  EE Coulomb energy                     +1.26367450      +0.13537917      +1.12829533
+  EE xc    energy                       -0.03416843      +0.00000000      -0.03416843
+  EE x     energy                       -0.03416843      +0.00000000      -0.03416843
+  EE  c    energy                       +0.00000000      +0.00000000      +0.00000000
+  Clasical interaction (xc out)         -0.24641813      +0.64689317      -0.89331130
+  Delocalization index (xc)             +0.20799039
+  Delocalization index (x )             +0.20799039
+  Delocalization index ( c)             +0.00000000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;iqa-summary-2&#34;&gt;IQA summary&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;julia&amp;gt; iqa
+📍Total energy components                  ⟨Ψ|⋅|Ψ⟩
+  ───────────────────────────────────────────────────────────
+         TOTAL ENERGY =      -7.97528439  𝓔 = 𝓣 + 𝓥
+              KINETIC =      +7.97864654  𝓣
+            POTENTIAL =     -15.95393093  𝓥 = 𝓥nn + 𝓥ne + 𝓥ee
+              NUC-NUC =      +0.99280792  𝓥nn
+               NUC-EL =     -20.43317153  𝓥ne
+                EL-EL =      +3.48643268  𝓥ee = 𝓥H + 𝓥xc
+        EL-EL Coulomb =      +5.62802512  𝓥H
+     EL-EL (Exc+Corr) =      -2.14159244  𝓥xc = 𝓥x + 𝓥c
+           EL-EL Exc  =      -2.14159244  𝓥x
+           EL-EL Corr =      +0.00000000  𝓥c
+               2𝓣 + 𝓥 =      +0.00336216
+         VIRIAL RATIO =      -1.99957861  𝓥/𝓣
+                 ENET =      -7.69469783  ∑A   𝓔ᴬ
+                 EINT =      -0.28058656  ∑A,B 𝓥ᴬᴮ
+           EINT class =      -0.24641813  ∑A,B 𝓥nnᴬᴮ + 𝓥neᴬᴮ + 𝓥neᴮᴬ + 𝓥Hᴬᴮ
+        EINT exc+corr =      -0.03416843  ∑A,B 𝓥xcᴬᴮ
+         TOTAL CHARGE =      +0.00865004  Qᴬ = ∑A (Zᴬ - Nᴬ)
+  ───────────────────────────────────────────────────────────
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;load-stored-results&#34;&gt;Load stored results&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; iqa = ChemInt.load_iqajson(&amp;quot;examples/lih/lih.gwf.json&amp;quot;)
+📍Intra components of basin: 1
+...
+📍Bicentric analysis of pair 1 2
+...
+📍Total energy components                  ⟨Ψ|⋅|Ψ⟩
+...
+julia&amp;gt; iqa.CHARGE
+0.00041845455180711255
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;import-dgrid-surfaces&#34;&gt;Import DGrid surfaces&lt;/h3&gt;
+&lt;p&gt;Example in &lt;code&gt;examples/LiMgN/convert_basins.jl&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;# 1. Import basins to ChemInt format
+import_dgrid_surface(bsn_name, npang, wfn)
+...
+# 2. Reorder basins if necessary
+reorder_surfaces(surfile, mapping)
+# 3. Generate point cloud
+wfn = parse_wavefunction(wfnfile)
+for ibasin in 1:wfn.natm
+   raycuts2pointcloud(wfn.coords, surfile; ibasin, format= :csv)
+end
+# Visualize with Avizo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;testing&#34;&gt;Testing&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; ]
+(ChemInt) pkg&amp;gt; test
+    Testing ChemInt
+...
+Test Summary:                |  Pass  Broken  Total
+ChemInt.jl: unit tests       | 38928       5  38933
+ChemInt.jl: integrated tests | 1158           1158
+ChemInt.jl: full examples    |   66           66
+    Testing ChemInt tests passed
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;further-details&#34;&gt;Further details&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;See the documentation at &lt;code&gt;docs/build/html/index.html&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;docs_header.png&#34; alt=&#34;Documentation&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;embedding&#34;&gt;Embedding&lt;/h3&gt;
+&lt;p&gt;Example calling ChemInt from C in &lt;code&gt;embedded&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Pass the configuration string and a logging filename to ChemInt, which
+logs the progress and generates the &lt;code&gt;*.json&lt;/code&gt; files with the outputs.
+Those files can be read with &lt;code&gt;load_iqajson()&lt;/code&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;draft&#34;&gt;Draft&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;&#34;&gt;image here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Comments, suggestions&lt;/p&gt;
 </description>
     </item>
     

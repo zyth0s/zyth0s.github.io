@@ -5,12 +5,94 @@
     <link>https://zyth0s.github.io/post/</link>
       <atom:link href="https://zyth0s.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 28 Dec 2020 11:26:52 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 04 Jan 2021 16:37:15 +0100</lastBuildDate>
     <image>
       <url>https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Posts</title>
       <link>https://zyth0s.github.io/post/</link>
     </image>
+    
+    <item>
+      <title>Scientific Memes</title>
+      <link>https://zyth0s.github.io/post/scientific-memes/</link>
+      <pubDate>Mon, 04 Jan 2021 16:37:15 +0100</pubDate>
+      <guid>https://zyth0s.github.io/post/scientific-memes/</guid>
+      <description>&lt;p&gt;Science is an indisputable source of progress for our society. A topical
+example is the use of recent advances in biochemistry to foster new vaccines
+for Sars-CoV-19.&lt;/p&gt;
+&lt;p&gt;The compendium of acquired scientific knowledge is so vast that nobody is
+expected to be illustrated in every branch of science, not even a field or
+subfield. For that reason it is difficult to even be aware of the main
+questions, concepts or definitions addressed currently by almost any
+discipline. In this regard, it would be helpful if we had at our disposal a
+collection of brief descriptions for them.&lt;/p&gt;
+&lt;p&gt;Here we seek to condense in the least amount of words, images, or recording
+length a given concept in science.  Much like memes in Dawkins&#39; description of
+the term (and contrary to popular usage) scientific memes are meant to be
+&lt;em&gt;units of scientific information, such as a scientific concept or question,
+that are transmitted verbally or visually from one mind to another&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Now you might ask how should those memes be. Something like a dictionary entry?
+Quite not. We would like a more rich medium, with some illustration to it.  A
+very good example is the following &lt;a href=&#34;https://www.i-programmer.info/programming/theory/3758-understanding-the-fourier-transform.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;explanation of Fourier transform by Stuart
+Riffle&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;fourier_transform.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The same format has been used to explain other mathematical concepts (examples
+taken from &lt;a href=&#34;https://betterexplained.com/articles/colorized-math-equations/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Better
+explained&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;euler_number.png&#34; alt=&#34;&#34;&gt;
+&lt;img src=&#34;euler_formula.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;A not less impressive format is used by physics professor &lt;a href=&#34;https://bunim180.wixsite.com/jurij0001&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Yuri
+Kovalenok&lt;/a&gt;. The following is only an
+example of a large collection of notebook notes handwritten by Yuri&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;rocket.webp&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;More like that by twitter user &lt;a href=&#34;&#34;&gt;@ThuyNganVu&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;quadratic.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Those notes are based on videos recorded by Youtube user
+&lt;a href=&#34;http://youtube.com/c/3blue1brown&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;3blue1brown&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I am pretty sure there are more examples like those around but those are the
+ones I encountered. Often when I learn a new concept I try to leave a note for myself that
+helps me when I forget what is the meaning.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Umklapp process: part of the momentum that the neutron gives to the solid
+goes to the centre of mass of the solid. The other part transforms into
+phonon modes.&lt;/li&gt;
+&lt;li&gt;Anderson &amp;amp; Kondo? Is the hybridisation of strongly correlated electron states
+with free electron bands. The problem is how to hybridise states of
+completely different nature.&lt;/li&gt;
+&lt;li&gt;Pierls instability is like the resonance in poly-acetylene between
+alternating bonds. The system spontaneously dimerises in two resonant ground
+state configurations.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Bloch states are closely related to chemists resonant structure concept&lt;/em&gt;
+“Modern Cond matter physics book”&lt;/li&gt;
+&lt;li&gt;Spin-orbit coupling: &lt;em&gt;Physically it can be understood as the Zeeman coupling
+between the magnetic moment carried by electron spin and the effective
+magnetic field seen by the electron in the reference frame in which it is at
+rest, while the other charges move around it&lt;/em&gt; “Modern Condensed matter Physics
+book”&lt;/li&gt;
+&lt;li&gt;Oxidation state: is the formal charge minus electrons shared with less
+electronegative atoms.&lt;/li&gt;
+&lt;li&gt;Josephson junction – &lt;em&gt;a non-superconducting region through which the Cooper
+pairs responsible for superconductivity can tunnel. This semiconducting “weak
+link” provides a persistent phase difference between the superconductors in the
+circuit, similar to the way that a classical battery provides a persistent
+voltage drop in an electronic circuit. Thanks to this phase difference, a
+superconducting current (that is, a current with zero dissipation) flows when
+the junction is embedded in the superconducting circuit&lt;/em&gt; Featured in Physics
+World&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Here’s an extremely brief version of the black hole information paradox:
+Stuff falls into a black hole. Over time — a long, long time — the black hole
+“evaporates.” What happened to the stuff? According to the rules of gravity,
+it’s gone, its information lost forever. But according to the rules of quantum
+mechanics, information can never be lost. Therefore, paradox.&lt;/em&gt; Featured in
+Quanta magazine&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;The biggest puzzle in cosmology right now has to do with the Hubble
+constant, a measure of the speed at which the universe is expanding. Data
+from the early universe predicts one value. Data from the modern universe
+predicts another.&lt;/em&gt; Featured in Quanta magazine&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://t.co/M7OW1BYT1R?amp=1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Hawking radiation by Gaston Giribet&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Spectral decomposition with Julia</title>
@@ -34,7 +116,7 @@
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;A = (A + A&#39;)/2
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;A $4 \times 4$ matrix has 4 eigenvalues $(e_1,e_2,e_3,e_4)$
-and 4 respective eigenvectors $(\mathbf{v}_1,\mathbf{v}_2,\bar{v}_3,\mathbf{v}_4)$&lt;/p&gt;
+and 4 respective eigenvectors $(\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3,\mathbf{v}_4)$&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;e, U = eigen(A) # solves $Av = ev$
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;eigen&lt;/code&gt; returns the eigenvalues in a vector &lt;code&gt;e&lt;/code&gt; and
