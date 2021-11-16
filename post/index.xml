@@ -7,7 +7,7 @@
     <description>Posts</description>
     <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 04 Jan 2021 16:37:15 +0100</lastBuildDate>
     <image>
-      <url>https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <url>https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>Posts</title>
       <link>https://zyth0s.github.io/post/</link>
     </image>
@@ -109,6 +109,10 @@ predicts another.&lt;/em&gt; Featured in Quanta magazine&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;using LinearAlgebra: eigen, Diagonal, I, det, rank
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Given an ordered basis every linear mapping has a unique transformation matrix.
+A way to characterize the matrix representation of the linear mapping is by how
+it transforms vectors. It turns out that we can find a set of special vectors
+that are just scaled by some &lt;em&gt;eigenvalue&lt;/em&gt; when we apply the linear mapping to them.&lt;/p&gt;
 &lt;p&gt;Lets take a $4 \times 4$ matrix,&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;A = rand(4,4)
 &lt;/code&gt;&lt;/pre&gt;
@@ -122,7 +126,9 @@ and 4 respective eigenvectors $(\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3,\mathbf{v
 &lt;p&gt;&lt;code&gt;eigen&lt;/code&gt; returns the eigenvalues in a vector &lt;code&gt;e&lt;/code&gt; and
 the eigenvectors as columns of a matrix &lt;code&gt;U&lt;/code&gt;.
 E.g. the first eigenvalue is $e_1 =$ &lt;code&gt;e[1]&lt;/code&gt; and the first
-eigenvector is $\mathbf{v}_1 =$ &lt;code&gt;U[:,1]&lt;/code&gt;.&lt;/p&gt;
+eigenvector is $\mathbf{v}_1 =$ &lt;code&gt;U[:,1]&lt;/code&gt;.
+Note that eigenvalues are ordered in descending order and eigenvectors
+reflect this reordering.&lt;/p&gt;
 &lt;p&gt;We can check that the secular equation $|\mathbf{A} - e_i\mathbf{I}| = 0$ is satisfied (for each eigenvalue)&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;for i in 1:4
    isapprox( det(A - e[i]*I), 0.00, atol=1e-4) || error(&amp;quot;Secular equation $i not satisfied&amp;quot;)

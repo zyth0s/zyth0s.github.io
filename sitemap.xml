@@ -1,174 +1,95 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
+    <loc>https://zyth0s.github.io/publication-type/0/</loc>
+    <lastmod>2021-10-01T19:43:30+00:00</lastmod>
+  </url><url>
+    <loc>https://zyth0s.github.io/publication-type/3/</loc>
+    <lastmod>2021-10-01T19:43:30+00:00</lastmod>
+  </url><url>
     <loc>https://zyth0s.github.io/</loc>
-    <lastmod>2021-01-04T16:37:15+01:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2021-10-01T19:43:30+00:00</lastmod>
+  </url><url>
+    <loc>https://zyth0s.github.io/publication/iqa-solids/</loc>
+    <lastmod>2021-10-01T19:43:30+00:00</lastmod>
+  </url><url>
+    <loc>https://zyth0s.github.io/publication_types/</loc>
+    <lastmod>2021-10-01T19:43:30+00:00</lastmod>
+  </url><url>
+    <loc>https://zyth0s.github.io/publication/</loc>
+    <lastmod>2021-10-01T19:43:30+00:00</lastmod>
+  </url><url>
     <loc>https://zyth0s.github.io/post/</loc>
     <lastmod>2021-01-04T16:37:15+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/post/scientific-memes/</loc>
     <lastmod>2021-01-04T16:37:15+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/categories/</loc>
     <lastmod>2020-12-29T09:54:08+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/project/</loc>
     <lastmod>2020-12-29T09:54:08+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/tag/quantum-computing/</loc>
     <lastmod>2020-12-29T09:54:08+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/category/quantum-computing/</loc>
     <lastmod>2020-12-29T09:54:08+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/tags/</loc>
     <lastmod>2020-12-29T09:54:08+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/project/variational-quantum-eigensolver-for-ising-hamiltonians/</loc>
     <lastmod>2020-12-29T09:54:08+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/project/psi4julia/</loc>
     <lastmod>2020-12-28T12:39:29+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/tag/condensed-matter/</loc>
     <lastmod>2020-12-28T12:20:55+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/category/condensed-matter/</loc>
     <lastmod>2020-12-28T12:20:55+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/project/tight-binding-tutorial/</loc>
     <lastmod>2020-12-28T12:20:55+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/post/spectral-decomposition-with-julia/</loc>
     <lastmod>2020-12-28T11:26:52+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc></loc>
-    <lastmod>2020-12-28T08:25:09+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc></loc>
-    <lastmod>2020-12-28T08:25:09+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/tag/solar-dynamics/</loc>
     <lastmod>2020-12-28T08:25:09+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/category/solar-dynamics/</loc>
     <lastmod>2020-12-28T08:25:09+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/project/solar-system-simulation/</loc>
     <lastmod>2020-12-28T08:25:09+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/project/quantum-teleportation-tutorial/</loc>
     <lastmod>2020-12-28T00:13:44+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/slides/example/</loc>
     <lastmod>2020-01-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
+    <loc>https://zyth0s.github.io/slides/integ_accuracy/</loc>
+    <lastmod>2020-01-03T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zyth0s.github.io/slides/</loc>
     <lastmod>2020-01-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/publication-type/2/</loc>
     <lastmod>2018-04-14T17:55:43+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc></loc>
-    <lastmod>2018-04-14T17:55:43+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc></loc>
-    <lastmod>2018-04-14T17:55:43+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc></loc>
-    <lastmod>2018-04-14T17:55:43+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zyth0s.github.io/publication_types/</loc>
-    <lastmod>2018-04-14T17:55:43+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zyth0s.github.io/publication/</loc>
-    <lastmod>2018-04-14T17:55:43+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/publication/realspace-in-situ-bond-energies-toward-a-consistent-energetic-definition-of-bond-strength/</loc>
     <lastmod>2018-04-14T17:55:43+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc></loc>
-    <lastmod>2018-04-14T17:55:43+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/publication/a-multipolar-approach-to-the-interatomic-covalent-interaction-energy/</loc>
     <lastmod>2017-02-16T19:33:15+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zyth0s.github.io/publication/an-unexpected-bridge-between-chemical-bonding-indicators-and-electrical-conductivity-through-the-localization-tensor/</loc>
     <lastmod>2016-12-12T19:40:06+00:00</lastmod>
   </url>
-  
-  <url>
-    <loc></loc>
-    <lastmod>2016-12-12T19:40:06+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc></loc>
-  </url>
-  
 </urlset>

@@ -5,12 +5,20 @@
     <link>https://zyth0s.github.io/</link>
       <atom:link href="https://zyth0s.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Daniel Menéndez Crespo</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 04 Jan 2021 16:37:15 +0100</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 01 Oct 2021 19:43:30 +0000</lastBuildDate>
     <image>
-      <url>https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <url>https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>Daniel Menéndez Crespo</title>
       <link>https://zyth0s.github.io/</link>
     </image>
+    
+    <item>
+      <title>Interacting Quantum Atoms Method for Crystalline Solids</title>
+      <link>https://zyth0s.github.io/publication/iqa-solids/</link>
+      <pubDate>Fri, 01 Oct 2021 19:43:30 +0000</pubDate>
+      <guid>https://zyth0s.github.io/publication/iqa-solids/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Scientific Memes</title>
@@ -822,6 +830,10 @@ end
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;using LinearAlgebra: eigen, Diagonal, I, det, rank
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Given an ordered basis every linear mapping has a unique transformation matrix.
+A way to characterize the matrix representation of the linear mapping is by how
+it transforms vectors. It turns out that we can find a set of special vectors
+that are just scaled by some &lt;em&gt;eigenvalue&lt;/em&gt; when we apply the linear mapping to them.&lt;/p&gt;
 &lt;p&gt;Lets take a $4 \times 4$ matrix,&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;A = rand(4,4)
 &lt;/code&gt;&lt;/pre&gt;
@@ -835,7 +847,9 @@ and 4 respective eigenvectors $(\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3,\mathbf{v
 &lt;p&gt;&lt;code&gt;eigen&lt;/code&gt; returns the eigenvalues in a vector &lt;code&gt;e&lt;/code&gt; and
 the eigenvectors as columns of a matrix &lt;code&gt;U&lt;/code&gt;.
 E.g. the first eigenvalue is $e_1 =$ &lt;code&gt;e[1]&lt;/code&gt; and the first
-eigenvector is $\mathbf{v}_1 =$ &lt;code&gt;U[:,1]&lt;/code&gt;.&lt;/p&gt;
+eigenvector is $\mathbf{v}_1 =$ &lt;code&gt;U[:,1]&lt;/code&gt;.
+Note that eigenvalues are ordered in descending order and eigenvectors
+reflect this reordering.&lt;/p&gt;
 &lt;p&gt;We can check that the secular equation $|\mathbf{A} - e_i\mathbf{I}| = 0$ is satisfied (for each eigenvalue)&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;for i in 1:4
    isapprox( det(A - e[i]*I), 0.00, atol=1e-4) || error(&amp;quot;Secular equation $i not satisfied&amp;quot;)
@@ -1291,6 +1305,7 @@ above 90%. The results have been published in &lt;a href=&#34;https://journals.a
       <description>&lt;h2 id=&#34;energetic-bonding-analysis-with-chemint&#34;&gt;Energetic bonding analysis with ChemInt&lt;/h2&gt;
 &lt;p&gt;Daniel Menéndez Crespo&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://cpfs.mpg.de&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MPI CPFS&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;mpg_logo.svg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;outline&#34;&gt;Outline&lt;/h3&gt;
 &lt;ul&gt;
@@ -1299,6 +1314,7 @@ above 90%. The results have been published in &lt;a href=&#34;https://journals.a
 &lt;li&gt;Import DGrid surfaces&lt;/li&gt;
 &lt;li&gt;Testing &amp;amp; Documentation&lt;/li&gt;
 &lt;li&gt;Prototype embedding in DGrid&lt;/li&gt;
+&lt;li&gt;Issues&lt;/li&gt;
 &lt;li&gt;Draft paper.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
@@ -1309,7 +1325,7 @@ above 90%. The results have been published in &lt;a href=&#34;https://journals.a
 &lt;li&gt;HF and DFT wavefunctions&lt;/li&gt;
 &lt;li&gt;Parallel execution&lt;/li&gt;
 &lt;li&gt;Exhaustive documentation&lt;/li&gt;
-&lt;li&gt;ca. 39000 tests; 80% coverage&lt;/li&gt;
+&lt;li&gt;Validity: ca. 39000 tests; 80% coverage&lt;/li&gt;
 &lt;li&gt;Interactive&lt;/li&gt;
 &lt;li&gt;Julia and C++ versions (both interface DGrid)&lt;/li&gt;
 &lt;li&gt;&amp;hellip;&lt;/li&gt;
@@ -1382,6 +1398,54 @@ ChemInt.adjust_beta_sphere!(quadopts, surfile, wfn)
 display(quadopts)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;hr&gt;
+&lt;h3 id=&#34;quadrature-options&#34;&gt;Quadrature options&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; quadopts
+[ Info: 📍Quadrature options:
+[ Info:   Number of angular points  inside [434, 434]
+[ Info:   Number of  radial points outside [200, 200]
+[ Info:   Number of  radial points  inside [200, 200]
+[ Info:   Radial outside quadrature Gauss-Legendre
+[ Info:   Radial  inside quadrature Gauss-Legendre
+[ Info:   Radial outside mapping 2
+[ Info:   Radial  inside mapping 3
+[ Info:   Slater-Bragg radii [0.0, 0.0]
+[ Info:   β-sphere factor [0.6, 0.6]
+[ Info:   β-sphere radii [0.0, 0.0]
+[ Info:   Rmin of surfaces [0.0, 0.0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;multi-bi-polar-options&#34;&gt;Multi-/bi-polar options&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; xpolaropts
+[ Info: 📍Bi-/multi-polar expansion options:
+[ Info:   Maximum l orders outside β-sphere: [6, 6]
+[ Info:   Maximum l orders  inside β-sphere: [4, 4]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;iqa-integration-options&#34;&gt;IQA integration options&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; iqaopts
+[ Info: 📍IQA integration options:
+[ Info:   № basins to ingegrate: 2
+[ Info:   № pairs  to ingegrate: 1
+[ Info:   Basins to ingegrate: [1, 2]
+[ Info:   Pairs  to ingegrate: [[1, 2]]
+[ Info:   Convergence threshold for bipolar = 1.0e-8
+[ Info:   Romberg extrapolation? false
+[ Info:   Monadic diagonalization? false
+[ Info:   Integrate exchange &amp;amp; correlation? true
+[ Info:   Orbitals in energy window [-Inf, Inf]
+[ Info:   Recovery? false
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;dft-options&#34;&gt;DFT options&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; dftopts
+[ Info: 📍DFT options:
+[ Info:   Activated? true
+[ Info:   Kinetic functional:
+[ Info:   Exchange or exchange-correlation functional: gga_x_pbe
+[ Info:   Correlation functional: gga_c_pbe
+[ Info:   Fraction of HF exchange is = 0.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
 &lt;h3 id=&#34;find-basin-boundaries&#34;&gt;Find basin boundaries&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; find_surfaces(surfopts, wfn)
 
@@ -1390,19 +1454,21 @@ display(quadopts)
 [ Info:    Trust sphere radius       = 2.2000000000000006
 [ Info:    Suggested β-sphere radius = 1.4000000000000001
 [ Info: Basin    1: 
-Surface of basin    1: 100%[=========================] Time: 0:01:03
+Surface of basin    1: 100%[================] Time: 0:01:03
 [ Info:    Closest  surface point minᵣ(||r - Rnuc||) = 2.40
 [ Info:    Farthest surface point maxᵣ(||r - Rnuc||) = 10.0
 ...
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Writes to &lt;code&gt;*.surf.h5&lt;/code&gt; file.&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;run-iqa&#34;&gt;Run IQA&lt;/h3&gt;
 &lt;p&gt;Integrate IQA energy components, LIs, and DIs.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; iqa = iqa_decomposition(surfile, wfn,
                       quadopts, xpolaropts, iqaopts, dftopts)
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Writes to &lt;code&gt;*.iqa.#.json&lt;/code&gt; and &lt;code&gt;*.iqa.json&lt;/code&gt; files.&lt;/p&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;iqa-summary&#34;&gt;IQA summary&lt;/h3&gt;
+&lt;h3 id=&#34;iqa-summary-monocentric&#34;&gt;IQA summary: Monocentric&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;julia&amp;gt; iqa.monos[1]
 📍Intra components of basin: 1
   ─────────────────────────────────────────────
@@ -1426,7 +1492,7 @@ Surface of basin    1: 100%[=========================] Time: 0:01:03
   Basin charge               =      +0.90302294
 &lt;/code&gt;&lt;/pre&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;iqa-summary-1&#34;&gt;IQA summary&lt;/h3&gt;
+&lt;h3 id=&#34;iqa-summary-interactions&#34;&gt;IQA summary: Interactions&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;julia&amp;gt; iqa.pairs[1]
 📍Bicentric analysis of pair 1 2
   ─────────────────────────────────────────────────────────────────────────────────────────
@@ -1448,7 +1514,7 @@ Surface of basin    1: 100%[=========================] Time: 0:01:03
   Delocalization index ( c)             +0.00000000
 &lt;/code&gt;&lt;/pre&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;iqa-summary-2&#34;&gt;IQA summary&lt;/h3&gt;
+&lt;h3 id=&#34;iqa-summary-total&#34;&gt;IQA summary: Total&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;julia&amp;gt; iqa
 📍Total energy components                  ⟨Ψ|⋅|Ψ⟩
   ───────────────────────────────────────────────────────────
@@ -1485,6 +1551,21 @@ julia&amp;gt; iqa.CHARGE
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;hr&gt;
+&lt;h3 id=&#34;analyze-results&#34;&gt;Analyze results&lt;/h3&gt;
+&lt;p&gt;For example, check convergence of 𝓥H.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; ChemInt.print_convergence(iqa.monos[1], 6)
+[ Info: 📍 LM Convergence [Total]:
+[ Info:     L         COULOMB              XC               X            CORR
+[ Info:   --- --------------- --------------- --------------- ---------------
+[ Info:     0       +3.465834       -1.659177       -1.659177       +0.000000
+[ Info:     1       +3.465981       -1.661697       -1.661697       +0.000000
+[ Info:     2       +3.466030       -1.661735       -1.661735       +0.000000
+[ Info:     3       +3.466048       -1.661744       -1.661744       +0.000000
+[ Info:     4       +3.466053       -1.661747       -1.661747       +0.000000
+[ Info:     5       +3.466055       -1.661748       -1.661748       +0.000000
+[ Info:     6       +3.466055       -1.661748       -1.661748       +0.000000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
 &lt;h3 id=&#34;import-dgrid-surfaces&#34;&gt;Import DGrid surfaces&lt;/h3&gt;
 &lt;p&gt;Example in &lt;code&gt;examples/LiMgN/convert_basins.jl&lt;/code&gt;.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;# 1. Import basins to ChemInt format
@@ -1500,7 +1581,10 @@ end
 # Visualize with Avizo
 &lt;/code&gt;&lt;/pre&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;testing&#34;&gt;Testing&lt;/h3&gt;
+&lt;h3 id=&#34;heading&#34;&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;vis_avizo.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;validation&#34;&gt;Validation&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;julia&amp;gt; ]
 (ChemInt) pkg&amp;gt; test
     Testing ChemInt
@@ -1508,14 +1592,93 @@ end
 Test Summary:                |  Pass  Broken  Total
 ChemInt.jl: unit tests       | 38928       5  38933
 ChemInt.jl: integrated tests | 1158           1158
-ChemInt.jl: full examples    |   66           66
+ChemInt.jl: full examples    |  120           120
     Testing ChemInt tests passed
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;hr&gt;
+&lt;h3 id=&#34;unit-tests&#34;&gt;Unit tests&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-julia&#34;&gt;ChemInt.jl: unit tests                         | 38992     1       5  38998
+  Parsing of AIM WFN format                    |    22                   22
+  Parsing of DGrid Gamess AIM format: LiH      |    16                   16
+  Parsing of DGrid FHI-aims format: Al Γ-point |    15                   15
+  WFN traits                                   |    31             5     36
+  ∇ρ(𝐫): Fortran ≡ Promolden                   |     5                    5
+  ∇ρ(𝐫): Julia   ≡ Promolden                   |     5                    5
+  ∇ρ(𝐫): Julia   ≡ Fortran                     |   101                  101
+  ∇ρ(𝐫): DGrid routines ≡ bpy                  |     4                    4
+  ∇ρ(𝐫): Wrapper  ≡ DGrid                      |     6                    6
+  ρ(𝐫): ChemInt ≡ Promolden                    |     7                    7
+  ρ(𝐫): DGridJLL ≡ Promolden                   |     7                    7
+  ρ(𝒓): DGridJLL ≡ DGrid                       |     2                    2
+  ρ(𝐫): Equivalence of routines                |   402                  402
+  τ(𝐫): ChemInt ≡ Promolden                    |     7                    7
+  τ(𝐫): DGridJLL ≡ Promolden                   |     7                    7
+  τ(𝐫): Equivalence of routines                |   402                  402
+  σ(𝐫): ChemInt ≡ Promolden                    |     5                    5
+  σ(𝐫): DGridJLL ≡ Promolden                   |     5                    5
+  σ(𝐫): Equivalence of routines                |   202                  202
+  Δρ(𝐫): ChemInt ≡ Promolden                   |     3                    3
+  Δρ(𝐫): DGridJLL ≡ Promolden                  |     3                    3
+  𝗛ρ(𝐫): vs Promolden                          |     3                    3
+  ρᵢⱼ(𝐫): ChemInt ≡ Promolden                  |                      No tests
+  ρᵢⱼ(𝐫): Equivalence of routines              |   201                  201
+  Defaults: surface                            |    26                   26
+  Defaults: quadrature                         |    60                   60
+  Defaults: x-polar                            |    23                   23
+  Defaults: IQA integration                    |    37                   37
+  Defaults: DFT                                |    13                   13
+  Defaults: Localization                       |     5                    5
+  TOML parsing: surface                        |     4                    4
+  TOML parsing: quadrature                     |     3                    3
+  TOML parsing: x-polar                        |     1                    1
+  TOML parsing: IQA integration                |     4                    4
+  TOML parsing: DFT                            |                      No tests
+  TOML parsing: Localization                   |                      No tests
+  Sphere quadrature: Lebedev-Laikov            |    96                   96
+  Radial quadrature: Euler-McLaurin            |     9                    9
+  Radial quadrature: Gauss-Legendre            |    48                   48
+  Radial quadrature: Clenshaw-Curtis           |   700                  700
+  Radial quadrature: Gauss-Chebyshev 1st order |    19                   19
+  Radial quadrature: Gauss-Chebyshev 2nd order |     9                    9
+  Radial quadrature: Trapezoidal               |     9                    9
+  n!                                           |    16                   16
+  n!!                                          |   171                  171
+  Real Spherical Harmonics                     |     6                    6
+  cᵏ                                           |    49                   49
+  dᵏ                                           | 33938                33938
+  𝑻                                            |     2                    2
+  IQA_Mono_Outβ data                           |    35                   35
+  IQA_Mono_Inβ data                            |    33                   33
+  IQA_Mono data                                |    36                   36
+  Mono += Region                               |     6                    6
+  IQA_Pair data                                |    40                   40
+  IQA data                                     |    25                   25
+  Δm                                           |     1                    1
+  𝓥ᵃ                                           |                      No tests
+  𝓥mat                                         |  2088                 2088
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;heading-1&#34;&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;coverage.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;file-organization&#34;&gt;File organization&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ChemInt&lt;/code&gt;: main file.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data_wfn&lt;/code&gt;: hold WFN parameters.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data_iqa&lt;/code&gt;: hold IQA energies.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;opts_*&lt;/code&gt;: hold calculation options.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iqa_decomposition&lt;/code&gt;: IQA integration driver&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;find_surfaces&lt;/code&gt;: surface search driver&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;eval_*&lt;/code&gt;: evaluation of point properties&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;monocentric_*&lt;/code&gt;: monocentric integrals&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bicentric_*&lt;/code&gt;: bicentric integrals&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
 &lt;h3 id=&#34;further-details&#34;&gt;Further details&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;See the documentation at &lt;code&gt;docs/build/html/index.html&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;See the documentation at &lt;code&gt;docs/build/html/index.html&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Build with &lt;code&gt;makedocs.sh&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;img src=&#34;docs_header.png&#34; alt=&#34;Documentation&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
@@ -1525,9 +1688,423 @@ ChemInt.jl: full examples    |   66           66
 logs the progress and generates the &lt;code&gt;*.json&lt;/code&gt; files with the outputs.
 Those files can be read with &lt;code&gt;load_iqajson()&lt;/code&gt;.&lt;/p&gt;
 &lt;hr&gt;
+&lt;h3 id=&#34;issues&#34;&gt;Issues&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Integration accuracy. Example: Charge error in LiMgN conventional cell is 0.15 e.
+&lt;ul&gt;
+&lt;li&gt;Changing integration parameters does not reduce error.&lt;/li&gt;
+&lt;li&gt;Surface perturbation alters the error. Even if surface is imported from DGrid.&lt;/li&gt;
+&lt;li&gt;Integration routines were carefully tested.&lt;/li&gt;
+&lt;li&gt;Refined surface but it was worse.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Basin integration: Close to DGrid.&lt;/p&gt;
+&lt;p&gt;Cell integration: Errors add up. Is it tolerable?&lt;/p&gt;
+&lt;hr&gt;
 &lt;h3 id=&#34;draft&#34;&gt;Draft&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;&#34;&gt;image here&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Comments, suggestions&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;paper_abstract.png&#34; alt=&#34;draft&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Comments, suggestions?&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Integration accuracy with ChemInt</title>
+      <link>https://zyth0s.github.io/slides/integ_accuracy/</link>
+      <pubDate>Fri, 03 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://zyth0s.github.io/slides/integ_accuracy/</guid>
+      <description>&lt;h3 id=&#34;outline&#34;&gt;Outline&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;LiMgN
+&lt;ul&gt;
+&lt;li&gt;Calculated surface
+&lt;ul&gt;
+&lt;li&gt;Volume; Charge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Imported surface
+&lt;ul&gt;
+&lt;li&gt;Volume; Laplacian; Charge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;BeAlB
+&lt;ul&gt;
+&lt;li&gt;Calculated surface
+&lt;ul&gt;
+&lt;li&gt;Volume; Charge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;LiAlSi
+&lt;ul&gt;
+&lt;li&gt;Calculated surface
+&lt;ul&gt;
+&lt;li&gt;Volume; Charge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;1-limgn-calculated-surface&#34;&gt;1. &lt;code&gt;LiMgN&lt;/code&gt;: Calculated surface&lt;/h2&gt;
+&lt;p&gt;That is, surface computed with an internal algorithm.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;limgn-volume-bohr3&#34;&gt;&lt;code&gt;LiMgN Volume (bohr^3)&lt;/code&gt;&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Li&lt;/th&gt;
+&lt;th&gt;Mg&lt;/th&gt;
+&lt;th&gt;N&lt;/th&gt;
+&lt;th&gt;Cell&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ChemInt CalcSurf&lt;/td&gt;
+&lt;td&gt;20.95&lt;/td&gt;
+&lt;td&gt;42.86&lt;/td&gt;
+&lt;td&gt;151.42&lt;/td&gt;
+&lt;td&gt;861.32&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DGrid&lt;/td&gt;
+&lt;td&gt;20.74&lt;/td&gt;
+&lt;td&gt;38.57&lt;/td&gt;
+&lt;td&gt;151.96&lt;/td&gt;
+&lt;td&gt;845.08&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;$\Delta V$&lt;/td&gt;
+&lt;td&gt;0.21&lt;/td&gt;
+&lt;td&gt;4.29&lt;/td&gt;
+&lt;td&gt;0.54&lt;/td&gt;
+&lt;td&gt;16.24&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Li has spikes and Mg has a crest.&lt;/p&gt;
+&lt;p&gt;Error concentrated in Mg basins.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;li-basin&#34;&gt;&lt;code&gt;Li basin&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;LiMgN_basin_Li.jpg&#34; alt=&#34;Li basin&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;mg-basin&#34;&gt;&lt;code&gt;Mg basin&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;LiMgN_basin_Mg.jpg&#34; alt=&#34;Mg basin&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;limgn-charge-e&#34;&gt;&lt;code&gt;LiMgN Charge (e)&lt;/code&gt;&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Li&lt;/th&gt;
+&lt;th&gt;Mg&lt;/th&gt;
+&lt;th&gt;N&lt;/th&gt;
+&lt;th&gt;Cell&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ChemInt CalcSurf&lt;/td&gt;
+&lt;td&gt;0.82&lt;/td&gt;
+&lt;td&gt;1.56&lt;/td&gt;
+&lt;td&gt;-2.42&lt;/td&gt;
+&lt;td&gt;-0.15&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DGrid&lt;/td&gt;
+&lt;td&gt;0.83&lt;/td&gt;
+&lt;td&gt;1.60&lt;/td&gt;
+&lt;td&gt;-2.43&lt;/td&gt;
+&lt;td&gt;+0.00&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;$\Delta V$&lt;/td&gt;
+&lt;td&gt;0.01&lt;/td&gt;
+&lt;td&gt;0.04&lt;/td&gt;
+&lt;td&gt;+0.01&lt;/td&gt;
+&lt;td&gt;-0.15&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Error concentrated in Mg basins.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;2-limgn-imported-dgrid-surface&#34;&gt;2. &lt;code&gt;LiMgN&lt;/code&gt;: Imported DGrid surface&lt;/h2&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;limgn-volume-bohr3-1&#34;&gt;&lt;code&gt;LiMgN Volume (bohr^3)&lt;/code&gt;&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Li&lt;/th&gt;
+&lt;th&gt;Mg&lt;/th&gt;
+&lt;th&gt;N&lt;/th&gt;
+&lt;th&gt;Cell&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ChemInt ImportSurf&lt;/td&gt;
+&lt;td&gt;21.19&lt;/td&gt;
+&lt;td&gt;40.01&lt;/td&gt;
+&lt;td&gt;153.32&lt;/td&gt;
+&lt;td&gt;857.96&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DGrid&lt;/td&gt;
+&lt;td&gt;20.74&lt;/td&gt;
+&lt;td&gt;38.57&lt;/td&gt;
+&lt;td&gt;151.96&lt;/td&gt;
+&lt;td&gt;845.08&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;$\Delta V$&lt;/td&gt;
+&lt;td&gt;0.45&lt;/td&gt;
+&lt;td&gt;1.44&lt;/td&gt;
+&lt;td&gt;2.50&lt;/td&gt;
+&lt;td&gt;12.88&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;$\sigma(V^{Li}) = 0.5$;
+$\sigma(V^{Mg}) = 0.6$;
+$\sigma(V^{N})  = 0.3$.&lt;/p&gt;
+&lt;p&gt;No spikes or crests.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;li-basin-imported&#34;&gt;&lt;code&gt;Li basin imported&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;LiMgN_basin_Li_import.jpg&#34; alt=&#34;Li basin imported&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;mg-basin-imported&#34;&gt;&lt;code&gt;Mg basin imported&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;LiMgN_basin_Mg_import.jpg&#34; alt=&#34;Mg basin imported&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;n-basin-imported&#34;&gt;&lt;code&gt;N basin imported&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;LiMgN_basin_N_import.jpg&#34; alt=&#34;N basin imported&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;limgn-laplacian-au&#34;&gt;&lt;code&gt;LiMgN Laplacian (a.u.)&lt;/code&gt;&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Li&lt;/th&gt;
+&lt;th&gt;Mg&lt;/th&gt;
+&lt;th&gt;N&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ChemInt ImportSurf&lt;/td&gt;
+&lt;td&gt;0.034&lt;/td&gt;
+&lt;td&gt;0.015&lt;/td&gt;
+&lt;td&gt;0.015&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;$\sigma(\Delta\rho^{Li}) = 0.024$;
+$\sigma(\Delta\rho^{Mg}) = 0.042$;
+$\sigma(\Delta\rho^{N})  = 0.003$.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;limgn-charge-e-1&#34;&gt;&lt;code&gt;LiMgN Charge (e)&lt;/code&gt;&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Li&lt;/th&gt;
+&lt;th&gt;Mg&lt;/th&gt;
+&lt;th&gt;N&lt;/th&gt;
+&lt;th&gt;Cell&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ChemInt ImportSurf&lt;/td&gt;
+&lt;td&gt;0.81&lt;/td&gt;
+&lt;td&gt;1.57&lt;/td&gt;
+&lt;td&gt;-2.43&lt;/td&gt;
+&lt;td&gt;-0.17&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DGrid&lt;/td&gt;
+&lt;td&gt;0.83&lt;/td&gt;
+&lt;td&gt;1.60&lt;/td&gt;
+&lt;td&gt;-2.43&lt;/td&gt;
+&lt;td&gt;+0.00&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;$\Delta V$&lt;/td&gt;
+&lt;td&gt;0.02&lt;/td&gt;
+&lt;td&gt;0.03&lt;/td&gt;
+&lt;td&gt;+0.00&lt;/td&gt;
+&lt;td&gt;-0.17&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;$\sigma(Q^{Li}) = 0.00$;
+$\sigma(Q^{Mg}) = 0.01$;
+$\sigma(Q^{N})  = 0.00$.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;1-bealb-calculated-surface&#34;&gt;1. &lt;code&gt;BeAlB&lt;/code&gt;: Calculated surface&lt;/h2&gt;
+&lt;p&gt;With an internal algorithm.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;bealb-volume-bohr3&#34;&gt;&lt;code&gt;BeAlB Volume (bohr^3)&lt;/code&gt;&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Be&lt;/th&gt;
+&lt;th&gt;Al&lt;/th&gt;
+&lt;th&gt;B&lt;/th&gt;
+&lt;th&gt;Cell&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ChemInt ImportSurf&lt;/td&gt;
+&lt;td&gt;18.31&lt;/td&gt;
+&lt;td&gt;35.02&lt;/td&gt;
+&lt;td&gt;155.45&lt;/td&gt;
+&lt;td&gt;835.11&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DGrid&lt;/td&gt;
+&lt;td&gt;17.16&lt;/td&gt;
+&lt;td&gt;33.28&lt;/td&gt;
+&lt;td&gt;155.68&lt;/td&gt;
+&lt;td&gt;824.48&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;$\Delta V$&lt;/td&gt;
+&lt;td&gt;1.25&lt;/td&gt;
+&lt;td&gt;1.74&lt;/td&gt;
+&lt;td&gt;0.23&lt;/td&gt;
+&lt;td&gt;11.37&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;be-basin&#34;&gt;&lt;code&gt;Be basin&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;BeAlB_basin_Be.jpg&#34; alt=&#34;Be basin&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;al-basin&#34;&gt;&lt;code&gt;Al basin&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;BeAlB_basin_Al.jpg&#34; alt=&#34;Al basin&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;b-basin&#34;&gt;&lt;code&gt;B basin&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;BeAlB_basin_B.jpg&#34; alt=&#34;B basin&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;bealb-charge-e&#34;&gt;&lt;code&gt;BeAlB Charge (e)&lt;/code&gt;&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Be&lt;/th&gt;
+&lt;th&gt;Al&lt;/th&gt;
+&lt;th&gt;B&lt;/th&gt;
+&lt;th&gt;Cell&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ChemInt ImportSurf&lt;/td&gt;
+&lt;td&gt;1.47&lt;/td&gt;
+&lt;td&gt;2.14&lt;/td&gt;
+&lt;td&gt;-3.66&lt;/td&gt;
+&lt;td&gt;-0.20&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DGrid&lt;/td&gt;
+&lt;td&gt;1.50&lt;/td&gt;
+&lt;td&gt;2.17&lt;/td&gt;
+&lt;td&gt;-3.67&lt;/td&gt;
+&lt;td&gt;+0.00&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;$\Delta V$&lt;/td&gt;
+&lt;td&gt;0.03&lt;/td&gt;
+&lt;td&gt;0.03&lt;/td&gt;
+&lt;td&gt;-0.01&lt;/td&gt;
+&lt;td&gt;-0.20&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;1-lialsi-calculated-surface&#34;&gt;1. &lt;code&gt;LiAlSi&lt;/code&gt;: Calculated surface&lt;/h2&gt;
+&lt;p&gt;With an internal algorithm.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;lialsi-volume-bohr3&#34;&gt;&lt;code&gt;LiAlSi Volume (bohr^3)&lt;/code&gt;&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Li&lt;/th&gt;
+&lt;th&gt;Al&lt;/th&gt;
+&lt;th&gt;Si&lt;/th&gt;
+&lt;th&gt;Cell&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ChemInt ImportSurf&lt;/td&gt;
+&lt;td&gt;24.95&lt;/td&gt;
+&lt;td&gt;76.83&lt;/td&gt;
+&lt;td&gt;253.10&lt;/td&gt;
+&lt;td&gt;1423.49&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DGrid&lt;/td&gt;
+&lt;td&gt;24.50&lt;/td&gt;
+&lt;td&gt;74.23&lt;/td&gt;
+&lt;td&gt;254.31&lt;/td&gt;
+&lt;td&gt;1412.16&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;$\Delta V$&lt;/td&gt;
+&lt;td&gt;0.45&lt;/td&gt;
+&lt;td&gt;2.60&lt;/td&gt;
+&lt;td&gt;1.21&lt;/td&gt;
+&lt;td&gt;11.33&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;lialsi-charge-e&#34;&gt;&lt;code&gt;LiAlSi Charge (e)&lt;/code&gt;&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Li&lt;/th&gt;
+&lt;th&gt;Al&lt;/th&gt;
+&lt;th&gt;Si&lt;/th&gt;
+&lt;th&gt;Cell&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ChemInt ImportSurf&lt;/td&gt;
+&lt;td&gt;0.83&lt;/td&gt;
+&lt;td&gt;1.56&lt;/td&gt;
+&lt;td&gt;-2.41&lt;/td&gt;
+&lt;td&gt;-0.08&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DGrid&lt;/td&gt;
+&lt;td&gt;0.83&lt;/td&gt;
+&lt;td&gt;1.58&lt;/td&gt;
+&lt;td&gt;-2.41&lt;/td&gt;
+&lt;td&gt;+0.00&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;$\Delta V$&lt;/td&gt;
+&lt;td&gt;0.00&lt;/td&gt;
+&lt;td&gt;0.02&lt;/td&gt;
+&lt;td&gt;+0.00&lt;/td&gt;
+&lt;td&gt;-0.08&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
 </description>
     </item>
     

@@ -245,7 +245,7 @@ Note about notation:
   
   
   
-  <link rel="stylesheet" href="/css/wowchemy.min.e7e0ad5836c242034a3ae2094e683a64.css">
+  <link rel="stylesheet" href="/css/wowchemy.min.57286657b7955fd5c794e64e1e9e946e.css">
 
   
 
@@ -263,8 +263,8 @@ Note about notation:
   
 
   <link rel="manifest" href="/index.webmanifest">
-  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
-  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png">
 
   <link rel="canonical" href="https://zyth0s.github.io/post/spectral-decomposition-with-julia/">
 
@@ -286,8 +286,8 @@ Note about notation:
   <meta property="og:title" content="Spectral decomposition with Julia | Daniel Menéndez Crespo">
   <meta property="og:description" content="We briefly discuss how to eigendecompose a symmetric square matrix, and check some of its properties.
 Note about notation:
- vectors are bold lowercase, like $\mathbf{u,v}$. matrices are bold uppercase, like $\mathbf{A,B,C}$."><meta property="og:image" content="https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
-  <meta property="twitter:image" content="https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+ vectors are bold lowercase, like $\mathbf{u,v}$. matrices are bold uppercase, like $\mathbf{A,B,C}$."><meta property="og:image" content="https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png">
+  <meta property="twitter:image" content="https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png"><meta property="og:locale" content="en-us">
   
     
       <meta property="article:published_time" content="2020-12-28T11:26:52&#43;00:00">
@@ -333,7 +333,7 @@ Note about notation:
     "name": "Daniel Menéndez Crespo",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+      "url": "https://zyth0s.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
     }
   },
   "description": "We briefly discuss how to eigendecompose a symmetric square matrix, and check some of its properties.\nNote about notation:\n vectors are bold lowercase, like $\\mathbf{u,v}$. matrices are bold uppercase, like $\\mathbf{A,B,C}$."
@@ -814,6 +814,10 @@ Note about notation:
 </ul>
 <pre><code class="language-julia">using LinearAlgebra: eigen, Diagonal, I, det, rank
 </code></pre>
+<p>Given an ordered basis every linear mapping has a unique transformation matrix.
+A way to characterize the matrix representation of the linear mapping is by how
+it transforms vectors. It turns out that we can find a set of special vectors
+that are just scaled by some <em>eigenvalue</em> when we apply the linear mapping to them.</p>
 <p>Lets take a $4 \times 4$ matrix,</p>
 <pre><code class="language-julia">A = rand(4,4)
 </code></pre>
@@ -827,7 +831,9 @@ and 4 respective eigenvectors $(\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3,\mathbf{v
 <p><code>eigen</code> returns the eigenvalues in a vector <code>e</code> and
 the eigenvectors as columns of a matrix <code>U</code>.
 E.g. the first eigenvalue is $e_1 =$ <code>e[1]</code> and the first
-eigenvector is $\mathbf{v}_1 =$ <code>U[:,1]</code>.</p>
+eigenvector is $\mathbf{v}_1 =$ <code>U[:,1]</code>.
+Note that eigenvalues are ordered in descending order and eigenvectors
+reflect this reordering.</p>
 <p>We can check that the secular equation $|\mathbf{A} - e_i\mathbf{I}| = 0$ is satisfied (for each eigenvalue)</p>
 <pre><code class="language-julia">for i in 1:4
    isapprox( det(A - e[i]*I), 0.00, atol=1e-4) || error(&quot;Secular equation $i not satisfied&quot;)
@@ -1244,7 +1250,7 @@ where $\mathbf{G}$ is the metric tensor.</p>
     
     
     
-    <script src="/js/wowchemy.min.abf79d5abd9391a904c9b122bfe98c04.js"></script>
+    <script src="/js/wowchemy.min.e793e50b2bdd548a6f04b3f7d3d93bf7.js"></script>
 
     
 
